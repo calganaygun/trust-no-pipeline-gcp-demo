@@ -1,0 +1,36 @@
+name: "🚨 [Attack Simulation] Rogue Branch / PR OIDC Hijack Attempt"
+
+# Simulates Mini Shai-Hulud (May 2026) & Nx s1ngularity (Aug 2025) trying to mint
+# a production Google Cloud token from an untrusted PR or non-main branch.
+on:
+  workflow_dispatch:
+  pull_request:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  attempt-oidc-hijack:
+    name: "Attempt Unauthorized GCP OIDC Token Exchange"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Inspect Current OIDC Claims Context
+        run: |
+          echo "🔍 Attacker / Untrusted Workflow Context:"
+          echo "   - Repository: ${{ github.repository }}"
+          echo "   - Git Ref:    ${{ github.ref }}"
+          echo "   - Event Name: ${{ github.event_name }}"
+          echo "   - Workflow:   ${{ github.workflow_ref }}"
+          echo ""
+          echo "⚠️ Attempting to exchange OIDC JWT against hardened GCP WIF Provider..."
+          echo "   Expected Result: 403 / invalid_grant (Blocked by GCP CEL Attribute Condition!)"
+
+      - name: Attempt GCP WIF Auth (Expected to FAIL on non-main / PR)
+        uses: google-github-actions/auth@6fc4af4b145ae7821d527454aa9bd537d1f2dc5f # v2.1.7
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER || vars.GCP_WIF_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT || vars.GCP_SERVICE_ACCOUNT }}

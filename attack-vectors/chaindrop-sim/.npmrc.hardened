@@ -1,0 +1,3 @@
+# Hardened npm / pnpm configuration to block ChainDrop & Shai-Hulud preinstall/postinstall hooks
+ignore-scripts=true
+audit=true

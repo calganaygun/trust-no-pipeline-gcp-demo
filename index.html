@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trust No Pipeline — Visual Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@500;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-cream: #FFFDF5;
+      --bg-dots: #E5E0D0;
+      --ink: #18181B;
+      --ink-soft: #52525B;
+      --white: #FFFFFF;
+      --yellow: #FFD166;
+      --coral: #FF5964;
+      --mint: #06D6A0;
+      --blue: #118AB2;
+      --gcp-blue: #4285F4;
+      --purple: #9B5DE5;
+      --orange: #F77F00;
+      --shadow: 6px 6px 0px #18181B;
+      --shadow-sm: 4px 4px 0px #18181B;
+      --shadow-lg: 10px 10px 0px #18181B;
+      --border: 3px solid #18181B;
+      --font-display: 'Fredoka', 'Plus Jakarta Sans', sans-serif;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-cream);
+      background-image: radial-gradient(var(--bg-dots) 2px, transparent 2px);
+      background-size: 28px 28px;
+      color: var(--ink);
+      font-family: var(--font-sans);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      user-select: none;
+    }
+
+    /* Floating Playful Background Shapes (No weird rotation) */
+    .bg-decor {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .floating-shape {
+      position: absolute;
+      border: var(--border);
+      box-shadow: var(--shadow-sm);
+      animation: floatBob 6s ease-in-out infinite;
+    }
+
+    @keyframes floatBob {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+
+    /* Top Bar */
+    .top-bar {
+      position: fixed;
+      top: 18px;
+      left: 36px;
+      right: 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .brand-tag {
+      background: var(--yellow);
+      border: var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-controls {
+      display: flex;
+      gap: 10px;
+    }
+
+    .neo-btn {
+      background: var(--white);
+      color: var(--ink);
+      border: var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 7px 14px;
+      border-radius: 12px;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.15s ease;
+    }
+
+    .neo-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px var(--ink);
+      background: var(--yellow);
+    }
+
+    .neo-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px var(--ink);
+    }
+
+    /* Slide Container */
+    .deck {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      z-index: 10;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: 74px 56px 68px 56px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(18px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      max-width: 1460px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* Typography — Clean & Straight */
+    .pill-badge {
+      display: inline-block;
+      background: var(--white);
+      border: var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 6px 18px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.86rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3.1rem, 5.4vw, 5rem);
+      font-weight: 700;
+      line-height: 1.08;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.1rem, 3.6vw, 3.3rem);
+      font-weight: 700;
+      line-height: 1.12;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+
+    .hl-yellow {
+      background: var(--yellow);
+      padding: 2px 14px;
+      border-radius: 14px;
+      border: 3px solid var(--ink);
+      display: inline-block;
+      box-shadow: 4px 4px 0px var(--ink);
+    }
+
+    .hl-coral {
+      background: var(--coral);
+      color: var(--white);
+      padding: 2px 14px;
+      border-radius: 14px;
+      border: 3px solid var(--ink);
+      display: inline-block;
+      box-shadow: 4px 4px 0px var(--ink);
+    }
+
+    .hl-mint {
+      background: var(--mint);
+      color: var(--ink);
+      padding: 2px 14px;
+      border-radius: 14px;
+      border: 3px solid var(--ink);
+      display: inline-block;
+      box-shadow: 4px 4px 0px var(--ink);
+    }
+
+    .hl-blue {
+      background: var(--gcp-blue);
+      color: var(--white);
+      padding: 2px 14px;
+      border-radius: 14px;
+      border: 3px solid var(--ink);
+      display: inline-block;
+      box-shadow: 4px 4px 0px var(--ink);
+    }
+
+    .hl-purple {
+      background: var(--purple);
+      color: var(--white);
+      padding: 2px 14px;
+      border-radius: 14px;
+      border: 3px solid var(--ink);
+      display: inline-block;
+      box-shadow: 4px 4px 0px var(--ink);
+    }
+
+    /* Big Visual Stage Boxes */
+    .stage-box {
+      width: 100%;
+      max-width: 1200px;
+      background: var(--white);
+      border: var(--border);
+      box-shadow: var(--shadow-lg);
+      border-radius: 28px;
+      padding: 28px;
+      margin: 10px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Keyword Sticker Row */
+    .keyword-row {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .sticker {
+      background: var(--white);
+      border: var(--border);
+      box-shadow: var(--shadow);
+      border-radius: 16px;
+      padding: 11px 20px;
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.15s ease;
+    }
+
+    .sticker:hover {
+      transform: translateY(-4px);
+    }
+
+    /* Grids */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      width: 100%;
+      max-width: 1200px;
+      margin-top: 8px;
+    }
+
+    .cases-grid-6 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      width: 100%;
+      max-width: 1280px;
+      margin-top: 8px;
+    }
+
+    .visual-card {
+      background: var(--white);
+      border: var(--border);
+      box-shadow: var(--shadow-lg);
+      border-radius: 24px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      min-height: 290px;
+    }
+
+    .visual-card.bad { background: #FFF0F2; }
+    .visual-card.good { background: #ECFDF5; }
+
+    .card-tag {
+      position: absolute;
+      top: -15px;
+      left: 24px;
+      padding: 5px 15px;
+      border-radius: 999px;
+      border: var(--border);
+      box-shadow: var(--shadow-sm);
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.82rem;
+    }
+
+    .big-icon {
+      font-size: 4.5rem;
+      margin-bottom: 10px;
+      filter: drop-shadow(3px 3px 0px var(--ink));
+    }
+
+    .card-headline {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .code-chip {
+      font-family: var(--font-mono);
+      font-size: 0.86rem;
+      font-weight: 700;
+      background: var(--ink);
+      color: var(--yellow);
+      padding: 6px 13px;
+      border-radius: 10px;
+      margin-top: 8px;
+      display: inline-block;
+    }
+
+    /* ================= INCIDENT LINKS CARDS (SLIDE 5) ================= */
+    .incident-card {
+      background: var(--white);
+      border: var(--border);
+      box-shadow: var(--shadow);
+      border-radius: 20px;
+      padding: 16px 18px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.15s ease;
+    }
+
+    .incident-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .incident-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .incident-title {
+      font-family: var(--font-display);
+      font-size: 1.22rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .incident-keywords {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin: 6px 0;
+    }
+
+    .kw-tag {
+      background: rgba(24, 24, 27, 0.08);
+      border: 1.5px solid var(--ink);
+      border-radius: 8px;
+      padding: 2px 8px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .incident-links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .link-pill {
+      background: var(--yellow);
+      color: var(--ink);
+      border: 2px solid var(--ink);
+      box-shadow: 3px 3px 0px var(--ink);
+      padding: 5px 10px;
+      border-radius: 9px;
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: transform 0.12s ease, background 0.12s ease;
+    }
+
+    .link-pill:hover {
+      background: var(--mint);
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0px var(--ink);
+    }
+
+    /* ================= ANIMATIONS ================= */
+
+    /* Slide 1 Conveyor Belt */
+    .conveyor-scene {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 30px;
+      position: relative;
+    }
+
+    .belt-track {
+      flex: 1;
+      height: 22px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--ink) 0px,
+        var(--ink) 20px,
+        #71717A 20px,
+        #71717A 40px
+      );
+      border: var(--border);
+      border-radius: 999px;
+      margin: 0 20px;
+      position: relative;
+      animation: beltMove 1.2s linear infinite;
+    }
+
+    @keyframes beltMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 40px 0; }
+    }
+
+    .moving-boxes {
+      position: absolute;
+      top: -66px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-around;
+      animation: boxBounce 0.9s ease-in-out infinite alternate;
+    }
+
+    @keyframes boxBounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-7px); }
+    }
+
+    /* Slide 3: Alert Pulse */
+    .danger-pulse-box {
+      animation: alertPulse 1.6s ease-in-out infinite;
+    }
+
+    @keyframes alertPulse {
+      0%, 100% { transform: scale(1); box-shadow: 6px 6px 0px var(--ink); }
+      50% { transform: scale(1.05); box-shadow: 10px 10px 0px var(--ink); }
+    }
+
+    /* Slide 4: MULTI-WORM PLAYGROUND (ChainDrop + Mini Shai-Hulud) */
+    .worm-playground {
+      width: 100%;
+      max-width: 1200px;
+      height: 310px;
+      background: #FEF9C3;
+      border: var(--border);
+      box-shadow: var(--shadow-lg);
+      border-radius: 28px;
+      position: relative;
+      overflow: hidden;
+      margin: 8px 0;
+    }
+
+    /* Big Worm 1: ChainDrop */
+    .worm-container {
+      position: absolute;
+      top: 24%;
+      left: -280px;
+      display: flex;
+      align-items: center;
+      animation: wormCrawlAcross 9.5s linear infinite;
+      z-index: 5;
+    }
+
+    /* Fast Mini Worm 2: Mini Shai-Hulud */
+    .mini-worm-container {
+      position: absolute;
+      top: 66%;
+      right: -220px;
+      display: flex;
+      align-items: center;
+      animation: miniWormCrawl 6.2s linear infinite;
+      z-index: 4;
+    }
+
+    .worm-container.zapped,
+    .mini-worm-container.zapped {
+      animation: none;
+      filter: grayscale(1);
+      opacity: 0.42;
+    }
+    .worm-container.zapped { left: 26%; top: 28%; }
+    .mini-worm-container.zapped { right: 24%; top: 62%; }
+
+    @keyframes wormCrawlAcross {
+      0% { left: -280px; top: 22%; }
+      25% { top: 38%; }
+      50% { top: 18%; }
+      75% { top: 40%; }
+      100% { left: 105%; top: 25%; }
+    }
+
+    @keyframes miniWormCrawl {
+      0% { right: -220px; top: 68%; }
+      33% { top: 52%; }
+      66% { top: 72%; }
+      100% { right: 105%; top: 58%; }
+    }
+
+    .worm-segment {
+      width: 52px;
+      height: 52px;
+      background: var(--coral);
+      border: 3px solid var(--ink);
+      border-radius: 50%;
+      margin-left: -10px;
+      box-shadow: 3px 3px 0px var(--ink);
+      animation: wormWiggle 0.45s ease-in-out infinite alternate;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .worm-segment:nth-child(1) {
+      width: 64px;
+      height: 64px;
+      background: #FF3366;
+      z-index: 7;
+      font-size: 1.55rem;
+    }
+    .worm-segment:nth-child(2) { animation-delay: 0.08s; z-index: 6; background: var(--coral); }
+    .worm-segment:nth-child(3) { animation-delay: 0.16s; z-index: 5; background: var(--orange); }
+    .worm-segment:nth-child(4) { animation-delay: 0.24s; z-index: 4; background: var(--yellow); color: var(--ink); }
+    .worm-segment:nth-child(5) { animation-delay: 0.32s; z-index: 3; background: var(--purple); }
+    .worm-segment:nth-child(6) { animation-delay: 0.40s; z-index: 2; background: var(--gcp-blue); }
+
+    /* Mini Shai-Hulud segments (smaller & faster) */
+    .mini-segment {
+      width: 40px;
+      height: 40px;
+      background: var(--purple);
+      border: 3px solid var(--ink);
+      border-radius: 50%;
+      margin-left: -8px;
+      box-shadow: 3px 3px 0px var(--ink);
+      animation: wormWiggle 0.3s ease-in-out infinite alternate;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .mini-segment:nth-child(1) { width: 48px; height: 48px; font-size: 1.25rem; background: #7C3AED; z-index: 5; }
+    .mini-segment:nth-child(2) { animation-delay: 0.06s; z-index: 4; }
+    .mini-segment:nth-child(3) { animation-delay: 0.12s; z-index: 3; background: var(--mint); color: var(--ink); }
+    .mini-segment:nth-child(4) { animation-delay: 0.18s; z-index: 2; }
+
+    @keyframes wormWiggle {
+      from { transform: translateY(-9px); }
+      to { transform: translateY(9px); }
+    }
+
+    .repo-node {
+      position: absolute;
+      background: var(--white);
+      border: var(--border);
+      box-shadow: var(--shadow-sm);
+      border-radius: 14px;
+      padding: 8px 14px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.8rem;
+      z-index: 2;
+    }
+
+    /* Slide 10: Bouncer Bounce-Back Animation */
+    .blocked-box {
+      display: inline-block;
+      animation: bounceReject 2s ease-in-out infinite;
+    }
+
+    @keyframes bounceReject {
+      0%, 30% { transform: translateX(0); opacity: 1; }
+      70% { transform: translateX(48px); opacity: 0.4; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+
+    /* Speaker Notes Drawer */
+    .notes-drawer {
+      position: fixed;
+      bottom: 64px;
+      right: 36px;
+      width: 450px;
+      background: var(--white);
+      border: var(--border);
+      box-shadow: var(--shadow-lg);
+      border-radius: 20px;
+      padding: 18px 20px;
+      z-index: 150;
+      display: none;
+      text-align: left;
+    }
+
+    .notes-drawer.open {
+      display: block;
+    }
+
+    .notes-drawer h4 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      margin-bottom: 6px;
+      color: var(--gcp-blue);
+    }
+
+    .notes-drawer p {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--ink-soft);
+    }
+
+    /* Bottom Progress & Dots */
+    .bottom-bar {
+      position: fixed;
+      bottom: 18px;
+      left: 36px;
+      right: 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .dots {
+      display: flex;
+      gap: 10px;
+    }
+
+    .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 2px solid var(--ink);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .dot.active {
+      background: var(--coral);
+      transform: scale(1.3);
+      box-shadow: 2px 2px 0px var(--ink);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Playful Floating Shapes in Background -->
+  <div class="bg-decor">
+    <div class="floating-shape" style="width:48px;height:48px;background:var(--yellow);border-radius:50%;top:12%;left:5%;"></div>
+    <div class="floating-shape" style="width:38px;height:38px;background:var(--mint);border-radius:8px;bottom:16%;left:7%;animation-delay:1.5s;"></div>
+    <div class="floating-shape" style="width:54px;height:54px;background:var(--coral);border-radius:14px;top:16%;right:6%;animation-delay:0.8s;"></div>
+    <div class="floating-shape" style="width:40px;height:40px;background:var(--purple);border-radius:50%;bottom:14%;right:8%;animation-delay:2.2s;"></div>
+  </div>
+
+  <!-- Top Bar -->
+  <header class="top-bar">
+    <div class="brand-tag">
+      <span>🎪</span>
+      <span>TRUST NO PIPELINE // GCP + GKE</span>
+    </div>
+    <div class="nav-controls">
+      <a class="neo-btn" href="https://github.com/calganaygun/trust-no-pipeline-gcp-demo" target="_blank" rel="noopener noreferrer" style="background:var(--mint);">🐙 GitHub Demo Repo ↗</a>
+      <button class="neo-btn" onclick="toggleNotes()">🗣️ [N] Speaker Notes</button>
+      <button class="neo-btn" onclick="toggleFullscreen()">📺 [F] Fullscreen</button>
+    </div>
+  </header>
+
+  <!-- SLIDES -->
+  <main class="deck">
+
+    <!-- ==================== SLIDE 1: TITLE ==================== -->
+    <section class="slide active" data-notes="Welcome! Today we're talking about why attackers stopped trying to break through your production firewall—and started riding your CI/CD conveyor belt straight into Google Cloud and GKE.">
+      <div class="pill-badge" style="background: var(--mint);">☁️ CLOUD SECURITY &amp; WORKLOAD IDENTITY</div>
+      <h1>
+        Trust <span class="hl-coral">No</span> Pipeline!
+      </h1>
+      <p style="font-size: 1.4rem; font-weight: 700; color: var(--ink-soft); margin-bottom: 16px;">
+        Securing Software Delivery &amp; Workload Identity in the Cloud
+      </p>
+
+      <!-- Conveyor Belt Visual -->
+      <div class="stage-box" style="background: #F0F9FF; padding: 54px 36px 28px 36px;">
+        <div class="conveyor-scene">
+          <div style="text-align: center;">
+            <div style="font-size: 4.2rem;">👩‍💻</div>
+            <div style="font-family: var(--font-display); font-weight: 700;">Git Push</div>
+          </div>
+
+          <div class="belt-track">
+            <div class="moving-boxes">
+              <div style="background:var(--yellow);border:3px solid var(--ink);border-radius:14px;padding:8px 14px;box-shadow:3px 3px 0 var(--ink);font-weight:700;">📦 Code</div>
+              <div style="background:var(--coral);color:#fff;border:3px solid var(--ink);border-radius:14px;padding:8px 14px;box-shadow:3px 3px 0 var(--ink);font-weight:700;">🐛 ChainDrop Worm!</div>
+              <div style="background:var(--mint);border:3px solid var(--ink);border-radius:14px;padding:8px 14px;box-shadow:3px 3px 0 var(--ink);font-weight:700;">🔑 OIDC Token</div>
+            </div>
+          </div>
+
+          <div style="text-align: center;">
+            <div style="font-size: 4.5rem;">🏰</div>
+            <div style="font-family: var(--font-display); font-weight: 700;">GCP / GKE Prod</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="keyword-row">
+        <div class="sticker" style="background: var(--yellow);">🔥 Zero Static Keys</div>
+        <div class="sticker" style="background: var(--mint);">🪪 Workload Identity</div>
+        <div class="sticker" style="background: #E0E7FF;">🔏 SLSA Provenance</div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 2: CASTLE VS DELIVERY TRUCK ==================== -->
+    <section class="slide" data-notes="Think of your production GKE cluster like a fortress: firewalls, private nodes, VPCs. Why would an attacker fight your lasers when your CI/CD delivery truck has 'roles/owner' and drives right through the front gate every 10 minutes?">
+      <div class="pill-badge" style="background: var(--yellow);">01 // THE PLOT TWIST</div>
+      <h2>Why Fight the <span class="hl-blue">Fortress</span>...<br/>When You Can Hijack the <span class="hl-coral">Delivery Truck?</span></h2>
+
+      <div class="compare-grid">
+        <div class="visual-card" style="background: #EFF6FF;">
+          <span class="card-tag" style="background: var(--gcp-blue); color: white;">PRODUCTION RUNTIME</span>
+          <div class="big-icon">🏰🛡️⚡</div>
+          <div class="card-headline">Hardened GKE Fortress</div>
+          <div class="keyword-row" style="margin-top:10px;">
+            <span class="code-chip">Private Nodes</span>
+            <span class="code-chip">Cloud Armor</span>
+            <span class="code-chip">IAM Policies</span>
+          </div>
+        </div>
+
+        <div class="visual-card bad">
+          <span class="card-tag" style="background: var(--coral); color: white;">CI/CD PIPELINE</span>
+          <div class="big-icon" style="animation: floatBob 1.5s infinite;">🚚💨🔓</div>
+          <div class="card-headline">VIP Delivery Truck</div>
+          <div class="keyword-row" style="margin-top:10px;">
+            <span class="code-chip" style="background:var(--coral);color:#fff;">roles/owner</span>
+            <span class="code-chip" style="background:var(--coral);color:#fff;">preinstall hooks</span>
+            <span class="code-chip" style="background:var(--coral);color:#fff;">@v1 tags</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 3: TJ-ACTIONS BAIT & SWITCH ==================== -->
+    <section class="slide" data-notes="March 2025: CVE-2025-30066 (tj-actions/changed-files & reviewdog). Attackers didn't hack Google Cloud. They stole a bot token and repointed version tags @v1 through @v45 to a malicious script that dumped CI runner memory straight into public logs across 23,000 repositories!">
+      <div class="pill-badge" style="background: var(--coral); color: white;">02 // REAL INCIDENT: MARCH 2025</div>
+      <h2>The <span class="hl-yellow">@v4</span> Bait &amp; Switch</h2>
+
+      <div class="stage-box" style="background: #FFF0F2;">
+        <div style="display:flex; align-items:center; justify-content:space-around; flex-wrap:wrap; gap:20px;">
+          <div>
+            <div style="font-size: 4.5rem;">🏷️</div>
+            <div class="code-chip">tj-actions/changed-files@v45</div>
+          </div>
+
+          <div style="font-size: 3.2rem;">👉</div>
+
+          <div class="danger-pulse-box" style="background:var(--coral); color:white; border:var(--border); border-radius:22px; padding:20px 30px;">
+            <div style="font-size: 3.8rem;">💣🧠</div>
+            <div style="font-family:var(--font-display); font-size:1.5rem; font-weight:700;">memdump.py</div>
+            <div style="font-family:var(--font-mono); font-size:0.85rem;">Dumps Runner RAM to Logs!</div>
+          </div>
+
+          <div style="font-size: 3.2rem;">👉</div>
+
+          <div style="background:var(--yellow); border:var(--border); box-shadow:var(--shadow); border-radius:22px; padding:20px 30px;">
+            <div style="font-family:var(--font-display); font-size:3rem; font-weight:700;">23,000+</div>
+            <div style="font-weight:700;">Repos Hit Overnight</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="keyword-row">
+        <div class="sticker" style="background: var(--coral); color: white;">❌ Never Trust `@v1` Tags</div>
+        <div class="sticker" style="background: var(--mint);">✅ Pin 40-Char Commit SHAs</div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 4: 2025–2026 WORMS ON THE LOOSE! ==================== -->
+    <section class="slide" data-notes="In 2025 and 2026, supply chain attacks evolved into self-propagating worms! Look at the two worms slithering across our pipeline: Top is ChainDrop (August 2026), which hit keyv and 400+ npm packages using Bun preinstall payloads and Ethereum smart contract C2! Bottom is Mini Shai-Hulud (May 2026), poisoning pnpm caches and stealing OIDC tokens via pull_request_target!">
+      <div class="pill-badge" style="background: var(--purple); color: white;">03 // 2025–2026 SELF-PROPAGATING WORMS</div>
+      <h2>Worms in the Pipeline: <span class="hl-coral">ChainDrop</span> &amp; <span class="hl-purple">Mini Shai-Hulud</span></h2>
+
+      <!-- Animated Multi-Worm Playground -->
+      <div class="worm-playground" id="wormBox">
+        <div class="repo-node" style="top: 18px; left: 24px;">📦 keyv &amp; 400+ npm pkgs</div>
+        <div class="repo-node" style="bottom: 18px; left: 34px;">⚡ pnpm cache + OIDC RAM</div>
+        <div class="repo-node" style="top: 18px; left: 42%;">⛓️ Ethereum Smart Contract C2</div>
+        <div class="repo-node" style="bottom: 18px; left: 44%;">🤖 Rogue Runner: SHA1HULUD</div>
+        <div class="repo-node" style="top: 22px; right: 24px;">🔑 GCP / K8s / Vault Keys</div>
+        <div class="repo-node" style="bottom: 20px; right: 24px;">🔀 pull_request_target</div>
+
+        <!-- Big Worm 1: ChainDrop (Aug 2026) -->
+        <div class="worm-container" id="theWorm">
+          <div class="worm-segment" id="wormHead1">😈</div>
+          <div class="worm-segment">CHAIN</div>
+          <div class="worm-segment">DROP</div>
+          <div class="worm-segment">BUN</div>
+          <div class="worm-segment">ETH</div>
+          <div class="worm-segment">2026</div>
+        </div>
+
+        <!-- Fast Mini Worm 2: Mini Shai-Hulud (May 2026) -->
+        <div class="mini-worm-container" id="theMiniWorm">
+          <div class="mini-segment" id="wormHead2">🐛</div>
+          <div class="mini-segment">MINI</div>
+          <div class="mini-segment">SHAI</div>
+          <div class="mini-segment">HULUD</div>
+        </div>
+      </div>
+
+      <div class="keyword-row">
+        <button class="neo-btn" style="background: var(--mint); font-size: 1.15rem; padding: 12px 24px;" onclick="zapWorm()">
+          ⚡ Starve Worms with Zero Static Keys + Strict WIF!
+        </button>
+        <div class="sticker" id="wormStatusSticker" style="background: var(--yellow);">
+          🐛 Auto-Republishing &amp; Eating Cloud Keys...
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 5: 2025–2026 CASE FILES & LINKS ==================== -->
+    <section class="slide" data-notes="Click any of these links during the presentation to show the audience the real 2025 and 2026 advisories from Elastic Security Labs, Unit 42, StepSecurity, CISA, Wiz, and GitGuardian!">
+      <div class="pill-badge" style="background: var(--yellow);">04 // 2025–2026 HALL OF INFAMY (CLICK TO OPEN)</div>
+      <h2>Real-World <span class="hl-coral">Incidents</span> &amp; Advisories</h2>
+
+      <div class="cases-grid-6">
+        <!-- Case 1: ChainDrop (Aug 2026) -->
+        <div class="incident-card" style="background: #FFF0F2;">
+          <div>
+            <div class="incident-header">
+              <div class="incident-title">⛓️ ChainDrop Worm</div>
+              <span class="code-chip" style="margin-top:0;background:var(--coral);color:#fff;">Aug 2026</span>
+            </div>
+            <div class="incident-keywords">
+              <span class="kw-tag">keyv + 400 pkgs</span>
+              <span class="kw-tag">Bun setup.mjs</span>
+              <span class="kw-tag">Ethereum C2</span>
+            </div>
+          </div>
+          <div class="incident-links">
+            <a class="link-pill" href="https://www.elastic.co/security-labs/threat-command/shai-hulud-chaindrop-npm-supply-chain" target="_blank" rel="noopener noreferrer">🔗 Elastic Lab ↗</a>
+            <a class="link-pill" href="https://unit42.paloaltonetworks.com/chaindrop-npm-worm-analysis/" target="_blank" rel="noopener noreferrer">📄 Unit 42 ↗</a>
+            <a class="link-pill" href="https://www.stepsecurity.io/blog/chaindrop-npm-worm" target="_blank" rel="noopener noreferrer">🛡️ StepSecurity ↗</a>
+          </div>
+        </div>
+
+        <!-- Case 2: Mini Shai-Hulud (May 2026) -->
+        <div class="incident-card" style="background: #F3E8FF;">
+          <div>
+            <div class="incident-header">
+              <div class="incident-title">🐛 Mini Shai-Hulud</div>
+              <span class="code-chip" style="margin-top:0;background:var(--purple);color:#fff;">May 2026</span>
+            </div>
+            <div class="incident-keywords">
+              <span class="kw-tag">Pwn Requests</span>
+              <span class="kw-tag">pnpm Cache</span>
+              <span class="kw-tag">OIDC RAM Dump</span>
+            </div>
+          </div>
+          <div class="incident-links">
+            <a class="link-pill" href="https://hackstacksecure.com/blogs/npm-worm-supply-chain-defense-2026/" target="_blank" rel="noopener noreferrer">🔗 2026 Analysis ↗</a>
+            <a class="link-pill" href="https://www.aikido.dev/blog/red-hat-npm-packages-compromised-credential-stealing-worm" target="_blank" rel="noopener noreferrer">📄 Aikido Report ↗</a>
+          </div>
+        </div>
+
+        <!-- Case 3: Shai-Hulud 2.0 (Nov 2025) -->
+        <div class="incident-card" style="background: #FEF9C3;">
+          <div>
+            <div class="incident-header">
+              <div class="incident-title">🏜️ Shai-Hulud 2.0</div>
+              <span class="code-chip" style="margin-top:0;">Nov 2025</span>
+            </div>
+            <div class="incident-keywords">
+              <span class="kw-tag">TruffleHog Scan</span>
+              <span class="kw-tag">SHA1HULUD Runner</span>
+              <span class="kw-tag">Auto-Publish</span>
+            </div>
+          </div>
+          <div class="incident-links">
+            <a class="link-pill" href="https://www.wiz.io/blog/shai-hulud-npm-supply-chain-attack" target="_blank" rel="noopener noreferrer">🔗 Wiz Research ↗</a>
+            <a class="link-pill" href="https://panther.com/blog/shai-hulud-npm-supply-chain-attack" target="_blank" rel="noopener noreferrer">📄 Panther Blog ↗</a>
+          </div>
+        </div>
+
+        <!-- Case 4: tj-actions (Mar 2025) -->
+        <div class="incident-card" style="background: #FFE4E6;">
+          <div>
+            <div class="incident-header">
+              <div class="incident-title">🏷️ `tj-actions` Hijack</div>
+              <span class="code-chip" style="margin-top:0;background:var(--coral);color:#fff;">Mar 2025</span>
+            </div>
+            <div class="incident-keywords">
+              <span class="kw-tag">CVE-2025-30066</span>
+              <span class="kw-tag">23,000+ Repos</span>
+              <span class="kw-tag">@v1–@v45 Tags</span>
+            </div>
+          </div>
+          <div class="incident-links">
+            <a class="link-pill" href="https://nvd.nist.gov/vuln/detail/CVE-2025-30066" target="_blank" rel="noopener noreferrer">🔗 NVD CVE ↗</a>
+            <a class="link-pill" href="https://www.cisa.gov/news-events/alerts/2025/03/18/supply-chain-compromise-third-party-github-action-cve-2025-30066" target="_blank" rel="noopener noreferrer">🏛️ CISA Alert ↗</a>
+          </div>
+        </div>
+
+        <!-- Case 5: Nx s1ngularity (Aug 2025) -->
+        <div class="incident-card" style="background: #E0F2FE;">
+          <div>
+            <div class="incident-header">
+              <div class="incident-title">🔀 Nx `s1ngularity`</div>
+              <span class="code-chip" style="margin-top:0;background:var(--gcp-blue);color:#fff;">Aug 2025</span>
+            </div>
+            <div class="incident-keywords">
+              <span class="kw-tag">pull_request_target</span>
+              <span class="kw-tag">AI CLI Tokens</span>
+              <span class="kw-tag">Cloud Keys</span>
+            </div>
+          </div>
+          <div class="incident-links">
+            <a class="link-pill" href="https://github.com/nrwl/nx/security/advisories/GHSA-cxm3-wv7p-598c" target="_blank" rel="noopener noreferrer">🔗 GitHub GHSA ↗</a>
+            <a class="link-pill" href="https://www.stepsecurity.io/blog" target="_blank" rel="noopener noreferrer">📄 StepSecurity ↗</a>
+          </div>
+        </div>
+
+        <!-- Case 6: GhostAction (Late 2025) -->
+        <div class="incident-card" style="background: #D1FAE5;">
+          <div>
+            <div class="incident-header">
+              <div class="incident-title">👻 `GhostAction`</div>
+              <span class="code-chip" style="margin-top:0;background:var(--ink);color:var(--mint);">Sep 2025</span>
+            </div>
+            <div class="incident-keywords">
+              <span class="kw-tag">3,200+ Secrets</span>
+              <span class="kw-tag">Rogue Workflows</span>
+              <span class="kw-tag">GCP / AWS Keys</span>
+            </div>
+          </div>
+          <div class="incident-links">
+            <a class="link-pill" href="https://blog.gitguardian.com/ghostaction-campaign-3-000-secrets-stolen/" target="_blank" rel="noopener noreferrer">🔗 GitGuardian ↗</a>
+            <a class="link-pill" href="https://cloud.google.com/iam/docs/workload-identity-federation-with-deployment-pipelines" target="_blank" rel="noopener noreferrer">☁️ GCP WIF Fix ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 6: IMMORTAL JSON KEYS ==================== -->
+    <section class="slide" data-notes="Why did ChainDrop and Shai-Hulud do so much damage? Because teams still export GCP Service Account JSON keys! A JSON key is a vampire—it lives until the year 9999 unless you stake it through the heart. On GCP, we kill it forever with one Organization Policy.">
+      <div class="pill-badge" style="background: var(--coral); color: white;">05 // PILLAR 1: KILL STATIC SECRETS</div>
+      <h2>Vampire Keys vs. <span class="hl-mint">Melting Ice Cubes</span></h2>
+
+      <div class="compare-grid">
+        <div class="visual-card bad">
+          <span class="card-tag" style="background: var(--coral); color: white;">STATIC JSON KEY</span>
+          <div class="big-icon">🧛‍♂️🗝️</div>
+          <div class="card-headline">Lives Until Year 9999</div>
+          <p style="font-weight: 700; color: var(--ink-soft);">Stolen by ChainDrop &amp; TruffleHog</p>
+          <div class="code-chip" style="background: var(--coral); color: white;">service-account-key.json</div>
+        </div>
+
+        <div class="visual-card good">
+          <span class="card-tag" style="background: var(--mint); color: var(--ink);">EPHEMERAL TOKEN</span>
+          <div class="big-icon">🧊⏱️</div>
+          <div class="card-headline">Melts in 60 Minutes</div>
+          <p style="font-weight: 700; color: var(--ink-soft);">Issued On-Demand via OIDC</p>
+          <div class="code-chip" style="background: var(--ink); color: var(--mint);">iam.disableServiceAccountKeyCreation</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 7: WORKLOAD IDENTITY FEDERATION PASSPORT ==================== -->
+    <section class="slide" data-notes="How does Workload Identity Federation (WIF) work without storing any secret in GitHub? It's airport passport control! GitHub prints a signed OIDC passport for the running job, Google Cloud STS checks the signature at the border, and hands back a 1-hour visitor badge.">
+      <div class="pill-badge" style="background: var(--gcp-blue); color: white;">06 // PILLAR 2: WORKLOAD IDENTITY FEDERATION</div>
+      <h2>Zero Stored Secrets: <span class="hl-yellow">Passport Control</span></h2>
+
+      <div class="stage-box" style="background: #F8FAFC;">
+        <div style="display:flex; align-items:center; justify-content:space-around; flex-wrap:wrap; gap:16px;">
+          <div style="background:var(--white);border:var(--border);box-shadow:var(--shadow);border-radius:22px;padding:24px;width:270px;">
+            <div style="font-size:4rem;">🏃‍♂️📄</div>
+            <div style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;">1. CI Runner</div>
+            <div class="code-chip">Signed OIDC JWT</div>
+          </div>
+
+          <div style="font-size:3rem;">✈️➡️</div>
+
+          <div style="background:var(--yellow);border:var(--border);box-shadow:var(--shadow);border-radius:22px;padding:24px;width:290px;">
+            <div style="font-size:4rem;">🛂🔍</div>
+            <div style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;">2. GCP STS Customs</div>
+            <div class="code-chip">Checks CEL Rules</div>
+          </div>
+
+          <div style="font-size:3rem;">✅➡️</div>
+
+          <div style="background:var(--mint);border:var(--border);box-shadow:var(--shadow);border-radius:22px;padding:24px;width:270px;">
+            <div style="font-size:4rem;">🎟️⏳</div>
+            <div style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;">3. Visitor Badge</div>
+            <div class="code-chip">TTL: 15–60 Mins</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 8: THE OIDC VIP LIST TRAP ==================== -->
+    <section class="slide" data-notes="Here is how Mini Shai-Hulud and Nx pwn-requests bypass naive OIDC! Teams switch to OIDC, but only check 'repository == acme/app'. That lets an untrusted Pull Request or feature branch mint a production token! Click the button to turn on the VIP CEL Condition!">
+      <div class="pill-badge" style="background: var(--yellow);">07 // THE #1 OIDC MISTAKE</div>
+      <h2>Who's on the <span class="hl-purple">VIP List?</span></h2>
+
+      <div class="stage-box" id="bouncerStage" style="background: #FFF0F2; transition: background 0.3s ease;">
+        <div id="bouncerBadView" style="display:flex; align-items:center; justify-content:space-around; flex-wrap:wrap;">
+          <div>
+            <div style="font-size:4.5rem;">🤡🔀</div>
+            <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:700;">Mini Shai-Hulud PR</div>
+            <div class="code-chip" style="background:var(--coral);color:#fff;">ref: refs/pull/42/merge</div>
+          </div>
+
+          <div style="font-size:3.5rem;">🚪🏃‍♂️💨</div>
+
+          <div>
+            <div style="font-size:4.5rem;">😴🛂</div>
+            <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:700;">Lazy WIF Policy</div>
+            <div class="code-chip">attribute.repo == "acme/app"</div>
+          </div>
+        </div>
+
+        <div id="bouncerGoodView" style="display:none; align-items:center; justify-content:space-around; flex-wrap:wrap;">
+          <div>
+            <div style="font-size:4.5rem;">🤡🚫</div>
+            <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:700;">PR &amp; Rogue Runner Blocked!</div>
+            <div class="code-chip" style="background:var(--coral);color:#fff;">403 Access Denied</div>
+          </div>
+
+          <div style="font-size:3.5rem;">🛑✋</div>
+
+          <div>
+            <div style="font-size:4.5rem;">🕶️🛂</div>
+            <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:700;">CEL Attribute Condition</div>
+            <div class="code-chip" style="color:var(--mint);">ref == 'refs/heads/main' &amp;&amp; runner == 'github-hosted'</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="keyword-row">
+        <button class="neo-btn" style="background: var(--yellow); font-size: 1.15rem; padding: 12px 24px;" onclick="toggleBouncer()">
+          🕶️ Toggle Strict CEL Bouncer!
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 9: GKE WORKLOAD IDENTITY ==================== -->
+    <section class="slide" data-notes="What about inside GKE? Don't let all your pods share the big Node Default Service Account like one giant master key on a lanyard! With GKE Workload Identity Federation, every Kubernetes ServiceAccount gets its own tiny, least-privilege IAM badge.">
+      <div class="pill-badge" style="background: var(--mint);">08 // PILLAR 3: GKE WORKLOAD IDENTITY</div>
+      <h2>Stop Sharing the <span class="hl-coral">Master Key</span> on GKE!</h2>
+
+      <div class="compare-grid">
+        <div class="visual-card bad">
+          <span class="card-tag" style="background: var(--coral); color: white;">LEGACY NODE SA</span>
+          <div class="big-icon">🚢🔑💥</div>
+          <div class="card-headline">1 Master Key for All Pods</div>
+          <p style="font-weight:700; color:var(--ink-soft);">1 Pod Hacked = Whole Project Owned</p>
+          <div class="code-chip" style="background:var(--coral);color:#fff;">...-compute@developer.gserviceaccount.com</div>
+        </div>
+
+        <div class="visual-card good">
+          <span class="card-tag" style="background: var(--mint);">GKE WORKLOAD IDENTITY</span>
+          <div class="big-icon">📦🪪✨</div>
+          <div class="card-headline">1 Pod = 1 Tiny Badge</div>
+          <p style="font-weight:700; color:var(--ink-soft);">Direct K8s ServiceAccount Binding</p>
+          <div class="code-chip">principal://.../ns/prod/sa/checkout</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 10: SLSA & BINARY AUTHORIZATION ==================== -->
+    <section class="slide" data-notes="During the Shai-Hulud & ChainDrop waves, even SLSA Level 2 wasn't enough when local maintainer tokens were stolen. You need SLSA Level 3 isolated builds (like Google Cloud Build) + Binary Authorization on GKE to block any container image that wasn't built in your isolated, hermetic pipeline!">
+      <div class="pill-badge" style="background: var(--yellow);">09 // PILLAR 4: ARTIFACT PROVENANCE</div>
+      <h2>No <span class="hl-mint">Wax Seal?</span> No Entry to GKE!</h2>
+
+      <div class="stage-box" style="background: #ECFDF5;">
+        <div style="display:flex; align-items:center; justify-content:space-around; flex-wrap:wrap; gap:20px;">
+          <div>
+            <div style="font-size:4.2rem;">🏭🔏</div>
+            <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:700;">Cloud Build</div>
+            <div class="code-chip">SLSA Level 3 Stamp</div>
+          </div>
+
+          <div style="font-size:3rem;">➡️</div>
+
+          <div>
+            <div style="font-size:4.2rem;">🦍🛡️</div>
+            <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:700;">Binary Authorization</div>
+            <div class="code-chip">GKE Admission Gate</div>
+          </div>
+
+          <div style="font-size:3rem;">🛑</div>
+
+          <div class="blocked-box" style="background:var(--coral);color:#fff;border:var(--border);box-shadow:var(--shadow);border-radius:18px;padding:16px 22px;">
+            <div style="font-size:3rem;">🏴‍☠️📦</div>
+            <div style="font-family:var(--font-mono);font-weight:700;">rogue-app:latest (BLOCKED)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="keyword-row">
+        <div class="sticker" style="background: var(--yellow);">📌 Digest Pinning (`@sha256`)</div>
+        <div class="sticker" style="background: var(--mint);">🛡️ Binary Authorization</div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 11: 4 STICKERS TO TAKE HOME ==================== -->
+    <section class="slide" data-notes="That's the whole philosophy! When you go back to your desk, remember these 4 stickers: Pin your SHAs, Burn your JSON keys, Lock your OIDC CEL conditions (including runner_environment == 'github-hosted' to block SHA1HULUD rogue runners!), and Stamp your artifacts. Now let's switch to the GCP Console and terminal for the live demo!">
+      <div class="pill-badge" style="background: var(--mint);">10 // MONDAY MORNING CHEAT SHEET</div>
+      <h2>4 Rules to <span class="hl-yellow">Sleep at Night</span> 😴</h2>
+
+      <div class="compare-grid" style="margin-top: 16px;">
+        <div class="visual-card" style="min-height: 200px; background: #FEF9C3;">
+          <div style="font-size: 3.4rem;">📌</div>
+          <div class="card-headline">1. Pin Commit SHAs</div>
+          <div class="code-chip">No floating @v4 tags + --ignore-scripts</div>
+        </div>
+
+        <div class="visual-card" style="min-height: 200px; background: #FFE4E6;">
+          <div style="font-size: 3.4rem;">🔥</div>
+          <div class="card-headline">2. Burn JSON Keys</div>
+          <div class="code-chip">disableServiceAccountKeyCreation</div>
+        </div>
+
+        <div class="visual-card" style="min-height: 200px; background: #E0E7FF;">
+          <div style="font-size: 3.4rem;">🛂</div>
+          <div class="card-headline">3. Check Branch &amp; Runner</div>
+          <div class="code-chip">WIF CEL: main + github-hosted</div>
+        </div>
+
+        <div class="visual-card" style="min-height: 200px; background: #D1FAE5;">
+          <div style="font-size: 3.4rem;">🔏</div>
+          <div class="card-headline">4. Stamp Artifacts</div>
+          <div class="code-chip">SLSA L3 + Binary Auth</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Speaker Notes Drawer -->
+  <aside class="notes-drawer" id="notesDrawer">
+    <h4>🎙️ Speaker Notes (For You, Not the Slide!)</h4>
+    <p id="notesText"></p>
+  </aside>
+
+  <!-- Bottom Bar -->
+  <footer class="bottom-bar">
+    <div id="slideNum">01 / 11</div>
+    <div class="dots" id="dotsContainer"></div>
+    <div>⬅️ ➡️ or SPACE</div>
+  </footer>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const dotsContainer = document.getElementById('dotsContainer');
+    const slideNum = document.getElementById('slideNum');
+    const notesDrawer = document.getElementById('notesDrawer');
+    const notesText = document.getElementById('notesText');
+    let idx = 0;
+
+    slides.forEach((_, i) => {
+      const d = document.createElement('div');
+      d.className = 'dot' + (i === 0 ? ' active' : '');
+      d.onclick = () => showSlide(i);
+      dotsContainer.appendChild(d);
+    });
+
+    function showSlide(n) {
+      idx = Math.max(0, Math.min(slides.length - 1, n));
+      slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+      Array.from(dotsContainer.children).forEach((d, i) => d.classList.toggle('active', i === idx));
+      slideNum.textContent = `${String(idx + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+      notesText.textContent = slides[idx].dataset.notes || '';
+    }
+
+    function toggleNotes() {
+      notesDrawer.classList.toggle('open');
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
+      else document.exitFullscreen().catch(() => {});
+    }
+
+    // Slide 4 Interactive Multi-Worm Zapper
+    let wormZapped = false;
+    function zapWorm() {
+      wormZapped = !wormZapped;
+      const worm1 = document.getElementById('theWorm');
+      const worm2 = document.getElementById('theMiniWorm');
+      const head1 = document.getElementById('wormHead1');
+      const head2 = document.getElementById('wormHead2');
+      const sticker = document.getElementById('wormStatusSticker');
+      const box = document.getElementById('wormBox');
+      if (wormZapped) {
+        worm1.classList.add('zapped');
+        worm2.classList.add('zapped');
+        head1.textContent = '😵';
+        head2.textContent = '😵';
+        box.style.background = '#D1FAE5';
+        sticker.style.background = 'var(--mint)';
+        sticker.textContent = '💀 Both Worms Starved! (0 Static Keys + Strict CEL)';
+      } else {
+        worm1.classList.remove('zapped');
+        worm2.classList.remove('zapped');
+        head1.textContent = '😈';
+        head2.textContent = '🐛';
+        box.style.background = '#FEF9C3';
+        sticker.style.background = 'var(--yellow)';
+        sticker.textContent = '🐛 Auto-Republishing & Eating Cloud Keys...';
+      }
+    }
+
+    // Slide 8 Interactive CEL Bouncer
+    let strictBouncer = false;
+    function toggleBouncer() {
+      strictBouncer = !strictBouncer;
+      document.getElementById('bouncerBadView').style.display = strictBouncer ? 'none' : 'flex';
+      document.getElementById('bouncerGoodView').style.display = strictBouncer ? 'flex' : 'none';
+      document.getElementById('bouncerStage').style.background = strictBouncer ? '#ECFDF5' : '#FFF0F2';
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); showSlide(idx + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); showSlide(idx - 1); }
+      if (e.key === 'n' || e.key === 'N') toggleNotes();
+      if (e.key === 'f' || e.key === 'F') toggleFullscreen();
+    });
+
+    showSlide(0);
+  </script>
+</body>
+</html>

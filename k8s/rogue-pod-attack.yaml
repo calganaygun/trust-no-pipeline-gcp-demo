@@ -1,0 +1,15 @@
+# ATTACK VECTOR DEMO: Rogue / Unattested Container Pod
+# Attempting to apply this manifest on a GKE cluster with Binary Authorization enabled
+# will immediately FAIL at the Kubernetes admission webhook!
+apiVersion: v1
+kind: Pod
+metadata:
+  name: chaindrop-rogue-miner
+  namespace: payments-prod
+spec:
+  serviceAccountName: payments-api-ksa
+  containers:
+    - name: rogue-container
+      # Mutable :latest tag without a valid Cloud Build SLSA Level 3 / KMS Attestor signature
+      image: docker.io/library/alpine:latest
+      command: ["sh", "-c", "echo 'Attempting unauthorized workload execution...' && sleep 3600"]

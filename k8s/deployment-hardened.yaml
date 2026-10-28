@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments-vault-api
+  namespace: payments-prod
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: payments-vault-api
+  template:
+    metadata:
+      labels:
+        app: payments-vault-api
+    spec:
+      serviceAccountName: payments-api-ksa
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: api
+          # Deployed by immutable @sha256 digest verified by Binary Authorization
+          image: us-central1-docker.pkg.dev/trustnopipelines/prod-containers/payments-api@sha256:e882491c426c191c5f46ceb938a9a19709c8a05f261b7c13ec99f9e98bae86f6
+          ports:
+            - containerPort: 8080
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]

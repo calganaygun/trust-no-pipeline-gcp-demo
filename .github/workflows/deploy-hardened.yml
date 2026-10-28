@@ -1,0 +1,70 @@
+name: "✅ Hardened Production Pipeline (WIF + SLSA L3 + Binary Auth)"
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# Global Default: Zero write or token permissions
+permissions:
+  contents: read
+
+env:
+  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID || vars.GCP_PROJECT_ID }}
+  WIF_PROVIDER: ${{ secrets.GCP_WIF_PROVIDER || vars.GCP_WIF_PROVIDER }}
+  SERVICE_ACCOUNT: ${{ secrets.GCP_SERVICE_ACCOUNT || vars.GCP_SERVICE_ACCOUNT }}
+  REGION: "us-central1"
+  GAR_REPO: "prod-containers"
+  SERVICE_NAME: "payments-api"
+
+jobs:
+  dependency-hygiene:
+    name: "1. Supply Chain Guard (Block preinstall Worms)"
+    runs-on: ubuntu-latest
+    steps:
+      # Pinned to full 40-char SHA (Defends against CVE-2025-30066 tj-actions tag hijack)
+      - name: Checkout Source (SHA Pinned)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Verify npm ignore-scripts blocks ChainDrop / Shai-Hulud preinstall hooks
+        working-directory: attack-vectors/chaindrop-sim
+        run: |
+          echo "🛡️ Running npm install with --ignore-scripts (ChainDrop setup.mjs will NOT execute)..."
+          npm install --ignore-scripts
+          echo "✅ Dependency install completed safely without executing lifecycle hooks!"
+
+  build-and-deploy:
+    name: "2. Ephemeral WIF Auth + SLSA L3 Provenance Verification"
+    needs: dependency-hygiene
+    runs-on: ubuntu-latest
+    # Grant OIDC token minting ONLY to this isolated deployment job
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout Source (SHA Pinned)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      # Authenticate via GCP Workload Identity Federation (Zero stored static keys!)
+      - name: Exchange GitHub OIDC JWT for Short-Lived GCP Token
+        id: auth
+        uses: google-github-actions/auth@6fc4af4b145ae7821d527454aa9bd537d1f2dc5f # v2.1.7
+        with:
+          workload_identity_provider: ${{ env.WIF_PROVIDER }}
+          service_account: ${{ env.SERVICE_ACCOUNT }}
+
+      - name: Set up Cloud SDK (SHA Pinned)
+        uses: google-github-actions/setup-gcloud@e427ad8a34f8676edf47cf7d7925499adf3eb74f # v2
+
+      - name: Verify Ephemeral Identity & Inspect SLSA Level 3 Artifact Provenance
+        run: |
+          echo "✅ Authenticated to Google Cloud via Short-Lived WIF OIDC Token (Zero Static Keys)!"
+          gcloud auth list
+          echo ""
+          echo "🔍 Inspecting Immutable Container Digest & SLSA Provenance in Artifact Registry:"
+          gcloud artifacts docker images list "${REGION}-docker.pkg.dev/${PROJECT_ID}/${GAR_REPO}" --include-tags
+          gcloud artifacts docker images describe \
+            "${REGION}-docker.pkg.dev/${PROJECT_ID}/${GAR_REPO}/${SERVICE_NAME}@sha256:e882491c426c191c5f46ceb938a9a19709c8a05f261b7c13ec99f9e98bae86f6" \
+            --show-provenance
