@@ -37,7 +37,7 @@ Once the bootstrap completes, launch the interactive **5-Scenario Live Attack Si
 
 ```text
 .
-├── index.html                                    # 🎪 Interactive Visual HTML Slide Deck (11 Slides)
+├── index.html                                    # 🎪 Interactive Visual HTML Slide Deck (19 Slides)
 ├── README.md                                     # 📖 Complete Speaker Runbook, GCP UIs & CLI Guide
 ├── .github/workflows/
 │   ├── deploy-hardened.yml                       # ✅ Hardened CI/CD: SHA-pinned, --ignore-scripts, WIF + SLSA L3
@@ -95,9 +95,8 @@ open index.html
 - **`→` / `Space` / `PageDown`**: Next slide (triggers staggered entry & pipeline packet animations)
 - **`←` / `PageUp`**: Previous slide
 - **`N`**: Toggle the **Speaker Notes Drawer** (bottom-right overlay with talking points per slide)
-- **`G`**: Toggle the **Slide Overview Grid** to jump directly to any slide
 - **`F`**: Toggle **Fullscreen Presentation Mode**
-- **Slide 6 Interactive Toggle**: Switch live between the **❌ Vulnerable WIF Config** and **✅ Hardened CEL-Locked WIF Config** during your talk.
+- **Big-Screen YAML & GCP CLI Slides (Slides 7, 10, 12, 14)**: Paired right next to each of the 4 pillars with large presenter-friendly YAML & `gcloud`/`kubectl` examples.
 
 ---
 

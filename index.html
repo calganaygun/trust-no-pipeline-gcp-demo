@@ -358,6 +358,38 @@
       display: inline-block;
     }
 
+    /* Big Projector-Friendly YAML / CLI Cards */
+    .big-code-card {
+      background: #18181B;
+      color: #F4F4F5;
+      border: var(--border);
+      box-shadow: var(--shadow-lg);
+      border-radius: 24px;
+      padding: 28px 26px 22px 26px;
+      text-align: left;
+      position: relative;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .big-code-pre {
+      font-family: var(--font-mono);
+      font-size: 1.12rem;
+      line-height: 1.55;
+      font-weight: 700;
+      white-space: pre-wrap;
+      word-break: break-word;
+      user-select: text;
+    }
+
+    .k-y { color: #FFD166; }
+    .k-g { color: #06D6A0; }
+    .k-b { color: #7DD3FC; }
+    .k-r { color: #FF5964; }
+    .k-c { color: #A1A1AA; }
+
     /* ================= INCIDENT LINKS CARDS (SLIDE 5) ================= */
     .incident-card {
       background: var(--white);
@@ -710,9 +742,144 @@
       transform: scale(1.3);
       box-shadow: 2px 2px 0px var(--ink);
     }
+
+    /* Mobile Detected Overlay with Visible Link Buttons */
+    .mobile-hub {
+      position: fixed;
+      inset: 0;
+      background-color: var(--bg-cream);
+      background-image: radial-gradient(var(--bg-dots) 2px, transparent 2px);
+      background-size: 24px 24px;
+      z-index: 500;
+      overflow-y: auto;
+      padding: 24px 18px 48px 18px;
+      display: none;
+      user-select: text;
+    }
+
+    .mobile-hub.active {
+      display: block;
+    }
+
+    .mobile-hub-inner {
+      max-width: 540px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .mobile-card {
+      background: var(--white);
+      border: var(--border);
+      box-shadow: var(--shadow);
+      border-radius: 20px;
+      padding: 18px;
+      text-align: left;
+    }
+
+    .mobile-btn-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .mobile-link-btn {
+      background: var(--yellow);
+      color: var(--ink);
+      border: 2.5px solid var(--ink);
+      box-shadow: 4px 4px 0px var(--ink);
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mobile-link-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px var(--ink);
+    }
   </style>
 </head>
 <body>
+
+  <!-- Mobile Detection Screen (Keeps all link buttons visibly listed!) -->
+  <div class="mobile-hub" id="mobileHub">
+    <div class="mobile-hub-inner">
+      <div class="mobile-card" style="background: #FEF9C3;">
+        <div class="pill-badge" style="background: var(--coral); color: white; margin-bottom: 8px;">📱 MOBILE VIEW DETECTED</div>
+        <h3 style="font-family: var(--font-display); font-size: 1.45rem; line-height: 1.2; margin-bottom: 8px;">
+          Slides Were Not Generated for Mobile Screens
+        </h3>
+        <p style="font-size: 0.95rem; font-weight: 700; color: var(--ink-soft); line-height: 1.45;">
+          This visual deck is built for a widescreen presenter display—but all session links, speaker contacts, demo repo, and 2025–2026 advisory links are listed right below!
+        </p>
+        <button class="neo-btn" onclick="dismissMobileHub()" style="margin-top: 12px; width: 100%; justify-content: center; background: var(--white);">
+          🖥️ Open Desktop Slides Anyway →
+        </button>
+      </div>
+
+      <div class="mobile-card" style="background: #EFF6FF;">
+        <div style="font-family: var(--font-display); font-size: 1.25rem; font-weight: 700;">👤 Speaker &amp; Demo Links</div>
+        <p style="font-size: 0.88rem; font-weight: 700; color: var(--ink-soft); margin-top: 2px;">
+          Çalgan Aygün • DevSecOps Generalist @ pipelines.company • GDE Cloud
+        </p>
+        <div class="mobile-btn-list">
+          <a class="mobile-link-btn" href="https://www.linkedin.com/in/calganaygun" target="_blank" rel="noopener noreferrer" style="background: #DBEAFE;">
+            <span>💼 Connect on LinkedIn</span><span>↗</span>
+          </a>
+          <a class="mobile-link-btn" href="https://github.com/calganaygun/trust-no-pipeline-gcp-demo" target="_blank" rel="noopener noreferrer" style="background: var(--mint);">
+            <span>💻 GitHub Demo Repo &amp; Scripts</span><span>↗</span>
+          </a>
+          <a class="mobile-link-btn" href="https://calganaygun.com" target="_blank" rel="noopener noreferrer" style="background: var(--white);">
+            <span>🌐 Website (calganaygun.com)</span><span>↗</span>
+          </a>
+          <a class="mobile-link-btn" href="https://pipelines.company" target="_blank" rel="noopener noreferrer" style="background: var(--yellow);">
+            <span>⚙️ pipelines.company</span><span>↗</span>
+          </a>
+          <a class="mobile-link-btn" href="https://github.com/calganaygun" target="_blank" rel="noopener noreferrer" style="background: #E0E7FF;">
+            <span>🐙 GitHub (@calganaygun)</span><span>↗</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="mobile-card" style="background: #FFF0F2;">
+        <div style="font-family: var(--font-display); font-size: 1.25rem; font-weight: 700;">📰 2025–2026 Incident Advisories</div>
+        <div class="mobile-btn-list">
+          <a class="mobile-link-btn" href="https://www.elastic.co/security-labs/threat-command/shai-hulud-chaindrop-npm-supply-chain" target="_blank" rel="noopener noreferrer" style="background: var(--white);">
+            <span>🐛 ChainDrop Worm (Elastic Lab)</span><span>↗</span>
+          </a>
+          <a class="mobile-link-btn" href="https://unit42.paloaltonetworks.com/chaindrop-npm-worm-analysis/" target="_blank" rel="noopener noreferrer" style="background: var(--white);">
+            <span>📄 ChainDrop Analysis (Unit 42)</span><span>↗</span>
+          </a>
+          <a class="mobile-link-btn" href="https://hackstacksecure.com/blogs/npm-worm-supply-chain-defense-2026/" target="_blank" rel="noopener noreferrer" style="background: var(--white);">
+            <span>🐛 Mini Shai-Hulud (2026 Defense)</span><span>↗</span>
+          </a>
+          <a class="mobile-link-btn" href="https://www.wiz.io/blog/shai-hulud-npm-supply-chain-attack" target="_blank" rel="noopener noreferrer" style="background: var(--white);">
+            <span>🐛 Shai-Hulud 2.0 (Wiz Research)</span><span>↗</span>
+          </a>
+          <a class="mobile-link-btn" href="https://www.cisa.gov/news-events/alerts/2025/03/18/supply-chain-compromise-third-party-github-action-cve-2025-30066" target="_blank" rel="noopener noreferrer" style="background: var(--white);">
+            <span>🏷️ tj-actions CVE-2025-30066 (CISA)</span><span>↗</span>
+          </a>
+          <a class="mobile-link-btn" href="https://github.com/nrwl/nx/security/advisories/GHSA-cxm3-wv7p-598c" target="_blank" rel="noopener noreferrer" style="background: var(--white);">
+            <span>⚠️ Nx s1ngularity (GitHub GHSA)</span><span>↗</span>
+          </a>
+          <a class="mobile-link-btn" href="https://blog.gitguardian.com/ghostaction-campaign-3-000-secrets-stolen/" target="_blank" rel="noopener noreferrer" style="background: var(--white);">
+            <span>⚠️ GhostAction Report (GitGuardian)</span><span>↗</span>
+          </a>
+          <a class="mobile-link-btn" href="https://cloud.google.com/iam/docs/workload-identity-federation-with-deployment-pipelines" target="_blank" rel="noopener noreferrer" style="background: var(--mint);">
+            <span>☁️ GCP Workload Identity Docs</span><span>↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Playful Floating Shapes in Background -->
   <div class="bg-decor">
@@ -725,13 +892,13 @@
   <!-- Top Bar -->
   <header class="top-bar">
     <div class="brand-tag">
-      <span>🎪</span>
+      <span>🛡️</span>
       <span>TRUST NO PIPELINE // GCP + GKE</span>
     </div>
     <div class="nav-controls">
-      <a class="neo-btn" href="https://github.com/calganaygun/trust-no-pipeline-gcp-demo" target="_blank" rel="noopener noreferrer" style="background:var(--mint);">🐙 GitHub Demo Repo ↗</a>
-      <button class="neo-btn" onclick="toggleNotes()">🗣️ [N] Speaker Notes</button>
-      <button class="neo-btn" onclick="toggleFullscreen()">📺 [F] Fullscreen</button>
+      <a class="neo-btn" href="https://github.com/calganaygun/trust-no-pipeline-gcp-demo" target="_blank" rel="noopener noreferrer" style="background:var(--mint);">💻 GitHub Demo Repo ↗</a>
+      <button class="neo-btn" onclick="toggleNotes()">📝 [N] Speaker Notes</button>
+      <button class="neo-btn" onclick="toggleFullscreen()">⛶ [F] Fullscreen</button>
     </div>
   </header>
 
@@ -748,37 +915,103 @@
         Securing Software Delivery &amp; Workload Identity in the Cloud
       </p>
 
-      <!-- Conveyor Belt Visual -->
-      <div class="stage-box" style="background: #F0F9FF; padding: 54px 36px 28px 36px;">
-        <div class="conveyor-scene">
-          <div style="text-align: center;">
-            <div style="font-size: 4.2rem;">👩‍💻</div>
-            <div style="font-family: var(--font-display); font-weight: 700;">Git Push</div>
-          </div>
+      <!-- Conveyor Belt Visual + Slides QR Code -->
+      <div style="display: flex; align-items: stretch; gap: 22px; width: 100%; max-width: 1200px; margin: 10px 0;">
+        <div class="stage-box" style="background: #F0F9FF; padding: 54px 32px 28px 32px; margin: 0; flex: 1;">
+          <div class="conveyor-scene">
+            <div style="text-align: center;">
+              <div style="font-size: 4.2rem;">💻</div>
+              <div style="font-family: var(--font-display); font-weight: 700;">Git Push</div>
+            </div>
 
-          <div class="belt-track">
-            <div class="moving-boxes">
-              <div style="background:var(--yellow);border:3px solid var(--ink);border-radius:14px;padding:8px 14px;box-shadow:3px 3px 0 var(--ink);font-weight:700;">📦 Code</div>
-              <div style="background:var(--coral);color:#fff;border:3px solid var(--ink);border-radius:14px;padding:8px 14px;box-shadow:3px 3px 0 var(--ink);font-weight:700;">🐛 ChainDrop Worm!</div>
-              <div style="background:var(--mint);border:3px solid var(--ink);border-radius:14px;padding:8px 14px;box-shadow:3px 3px 0 var(--ink);font-weight:700;">🔑 OIDC Token</div>
+            <div class="belt-track">
+              <div class="moving-boxes">
+                <div style="background:var(--yellow);border:3px solid var(--ink);border-radius:14px;padding:8px 14px;box-shadow:3px 3px 0 var(--ink);font-weight:700;">📦 Code</div>
+                <div style="background:var(--coral);color:#fff;border:3px solid var(--ink);border-radius:14px;padding:8px 14px;box-shadow:3px 3px 0 var(--ink);font-weight:700;">⚠️ Supply Chain Worm</div>
+                <div style="background:var(--mint);border:3px solid var(--ink);border-radius:14px;padding:8px 14px;box-shadow:3px 3px 0 var(--ink);font-weight:700;">🔑 OIDC Token</div>
+              </div>
+            </div>
+
+            <div style="text-align: center;">
+              <div style="font-size: 4.5rem;">🏰</div>
+              <div style="font-family: var(--font-display); font-weight: 700;">GCP / GKE Prod</div>
             </div>
           </div>
+        </div>
 
-          <div style="text-align: center;">
-            <div style="font-size: 4.5rem;">🏰</div>
-            <div style="font-family: var(--font-display); font-weight: 700;">GCP / GKE Prod</div>
+        <!-- QR Code to http://calgan.dev/krk-iam -->
+        <div style="background: var(--yellow); border: var(--border); box-shadow: var(--shadow-lg); border-radius: 28px; padding: 18px 22px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 245px;">
+          <div style="font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; margin-bottom: 8px;">📱 SCAN FOR SLIDES</div>
+          <div style="width: 138px; height: 138px; border: 3px solid var(--ink); border-radius: 14px; overflow: hidden; background: var(--white); padding: 4px; box-shadow: var(--shadow-sm);">
+            <svg viewBox="0 0 27 27" width="100%" height="100%" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg"><rect width="27" height="27" fill="#FFFFFF"/><path d="M1,1h1v1h-1zM2,1h1v1h-1zM3,1h1v1h-1zM4,1h1v1h-1zM5,1h1v1h-1zM6,1h1v1h-1zM7,1h1v1h-1zM9,1h1v1h-1zM10,1h1v1h-1zM11,1h1v1h-1zM12,1h1v1h-1zM13,1h1v1h-1zM15,1h1v1h-1zM17,1h1v1h-1zM19,1h1v1h-1zM20,1h1v1h-1zM21,1h1v1h-1zM22,1h1v1h-1zM23,1h1v1h-1zM24,1h1v1h-1zM25,1h1v1h-1zM1,2h1v1h-1zM7,2h1v1h-1zM10,2h1v1h-1zM11,2h1v1h-1zM12,2h1v1h-1zM14,2h1v1h-1zM15,2h1v1h-1zM19,2h1v1h-1zM25,2h1v1h-1zM1,3h1v1h-1zM3,3h1v1h-1zM4,3h1v1h-1zM5,3h1v1h-1zM7,3h1v1h-1zM9,3h1v1h-1zM12,3h1v1h-1zM14,3h1v1h-1zM19,3h1v1h-1zM21,3h1v1h-1zM22,3h1v1h-1zM23,3h1v1h-1zM25,3h1v1h-1zM1,4h1v1h-1zM3,4h1v1h-1zM4,4h1v1h-1zM5,4h1v1h-1zM7,4h1v1h-1zM10,4h1v1h-1zM11,4h1v1h-1zM12,4h1v1h-1zM14,4h1v1h-1zM15,4h1v1h-1zM17,4h1v1h-1zM19,4h1v1h-1zM21,4h1v1h-1zM22,4h1v1h-1zM23,4h1v1h-1zM25,4h1v1h-1zM1,5h1v1h-1zM3,5h1v1h-1zM4,5h1v1h-1zM5,5h1v1h-1zM7,5h1v1h-1zM12,5h1v1h-1zM13,5h1v1h-1zM15,5h1v1h-1zM19,5h1v1h-1zM21,5h1v1h-1zM22,5h1v1h-1zM23,5h1v1h-1zM25,5h1v1h-1zM1,6h1v1h-1zM7,6h1v1h-1zM9,6h1v1h-1zM10,6h1v1h-1zM14,6h1v1h-1zM17,6h1v1h-1zM19,6h1v1h-1zM25,6h1v1h-1zM1,7h1v1h-1zM2,7h1v1h-1zM3,7h1v1h-1zM4,7h1v1h-1zM5,7h1v1h-1zM6,7h1v1h-1zM7,7h1v1h-1zM9,7h1v1h-1zM11,7h1v1h-1zM13,7h1v1h-1zM15,7h1v1h-1zM17,7h1v1h-1zM19,7h1v1h-1zM20,7h1v1h-1zM21,7h1v1h-1zM22,7h1v1h-1zM23,7h1v1h-1zM24,7h1v1h-1zM25,7h1v1h-1zM11,8h1v1h-1zM13,8h1v1h-1zM15,8h1v1h-1zM17,8h1v1h-1zM1,9h1v1h-1zM3,9h1v1h-1zM7,9h1v1h-1zM8,9h1v1h-1zM10,9h1v1h-1zM12,9h1v1h-1zM16,9h1v1h-1zM17,9h1v1h-1zM20,9h1v1h-1zM23,9h1v1h-1zM25,9h1v1h-1zM1,10h1v1h-1zM2,10h1v1h-1zM3,10h1v1h-1zM4,10h1v1h-1zM5,10h1v1h-1zM6,10h1v1h-1zM8,10h1v1h-1zM11,10h1v1h-1zM12,10h1v1h-1zM13,10h1v1h-1zM15,10h1v1h-1zM16,10h1v1h-1zM17,10h1v1h-1zM19,10h1v1h-1zM20,10h1v1h-1zM22,10h1v1h-1zM24,10h1v1h-1zM25,10h1v1h-1zM5,11h1v1h-1zM7,11h1v1h-1zM9,11h1v1h-1zM11,11h1v1h-1zM12,11h1v1h-1zM15,11h1v1h-1zM16,11h1v1h-1zM17,11h1v1h-1zM21,11h1v1h-1zM22,11h1v1h-1zM23,11h1v1h-1zM25,11h1v1h-1zM2,12h1v1h-1zM5,12h1v1h-1zM8,12h1v1h-1zM10,12h1v1h-1zM11,12h1v1h-1zM12,12h1v1h-1zM13,12h1v1h-1zM17,12h1v1h-1zM22,12h1v1h-1zM1,13h1v1h-1zM5,13h1v1h-1zM7,13h1v1h-1zM8,13h1v1h-1zM10,13h1v1h-1zM12,13h1v1h-1zM13,13h1v1h-1zM16,13h1v1h-1zM17,13h1v1h-1zM19,13h1v1h-1zM20,13h1v1h-1zM25,13h1v1h-1zM2,14h1v1h-1zM5,14h1v1h-1zM8,14h1v1h-1zM13,14h1v1h-1zM14,14h1v1h-1zM16,14h1v1h-1zM17,14h1v1h-1zM19,14h1v1h-1zM20,14h1v1h-1zM24,14h1v1h-1zM25,14h1v1h-1zM1,15h1v1h-1zM2,15h1v1h-1zM3,15h1v1h-1zM5,15h1v1h-1zM7,15h1v1h-1zM9,15h1v1h-1zM10,15h1v1h-1zM13,15h1v1h-1zM15,15h1v1h-1zM16,15h1v1h-1zM17,15h1v1h-1zM19,15h1v1h-1zM22,15h1v1h-1zM23,15h1v1h-1zM25,15h1v1h-1zM5,16h1v1h-1zM6,16h1v1h-1zM8,16h1v1h-1zM10,16h1v1h-1zM11,16h1v1h-1zM12,16h1v1h-1zM13,16h1v1h-1zM15,16h1v1h-1zM16,16h1v1h-1zM17,16h1v1h-1zM18,16h1v1h-1zM19,16h1v1h-1zM1,17h1v1h-1zM2,17h1v1h-1zM3,17h1v1h-1zM4,17h1v1h-1zM7,17h1v1h-1zM8,17h1v1h-1zM9,17h1v1h-1zM10,17h1v1h-1zM13,17h1v1h-1zM15,17h1v1h-1zM17,17h1v1h-1zM18,17h1v1h-1zM19,17h1v1h-1zM20,17h1v1h-1zM21,17h1v1h-1zM24,17h1v1h-1zM9,18h1v1h-1zM11,18h1v1h-1zM14,18h1v1h-1zM17,18h1v1h-1zM21,18h1v1h-1zM23,18h1v1h-1zM25,18h1v1h-1zM1,19h1v1h-1zM2,19h1v1h-1zM3,19h1v1h-1zM4,19h1v1h-1zM5,19h1v1h-1zM6,19h1v1h-1zM7,19h1v1h-1zM9,19h1v1h-1zM12,19h1v1h-1zM14,19h1v1h-1zM17,19h1v1h-1zM19,19h1v1h-1zM21,19h1v1h-1zM22,19h1v1h-1zM25,19h1v1h-1zM1,20h1v1h-1zM7,20h1v1h-1zM11,20h1v1h-1zM13,20h1v1h-1zM15,20h1v1h-1zM17,20h1v1h-1zM21,20h1v1h-1zM24,20h1v1h-1zM1,21h1v1h-1zM3,21h1v1h-1zM4,21h1v1h-1zM5,21h1v1h-1zM7,21h1v1h-1zM11,21h1v1h-1zM13,21h1v1h-1zM16,21h1v1h-1zM17,21h1v1h-1zM18,21h1v1h-1zM19,21h1v1h-1zM20,21h1v1h-1zM21,21h1v1h-1zM22,21h1v1h-1zM24,21h1v1h-1zM1,22h1v1h-1zM3,22h1v1h-1zM4,22h1v1h-1zM5,22h1v1h-1zM7,22h1v1h-1zM10,22h1v1h-1zM12,22h1v1h-1zM13,22h1v1h-1zM14,22h1v1h-1zM17,22h1v1h-1zM18,22h1v1h-1zM21,22h1v1h-1zM22,22h1v1h-1zM23,22h1v1h-1zM24,22h1v1h-1zM1,23h1v1h-1zM3,23h1v1h-1zM4,23h1v1h-1zM5,23h1v1h-1zM7,23h1v1h-1zM9,23h1v1h-1zM12,23h1v1h-1zM14,23h1v1h-1zM15,23h1v1h-1zM18,23h1v1h-1zM21,23h1v1h-1zM24,23h1v1h-1zM25,23h1v1h-1zM1,24h1v1h-1zM7,24h1v1h-1zM11,24h1v1h-1zM15,24h1v1h-1zM17,24h1v1h-1zM20,24h1v1h-1zM21,24h1v1h-1zM1,25h1v1h-1zM2,25h1v1h-1zM3,25h1v1h-1zM4,25h1v1h-1zM5,25h1v1h-1zM6,25h1v1h-1zM7,25h1v1h-1zM9,25h1v1h-1zM10,25h1v1h-1zM12,25h1v1h-1zM13,25h1v1h-1zM17,25h1v1h-1zM19,25h1v1h-1zM22,25h1v1h-1zM25,25h1v1h-1z" fill="#18181B"/></svg>
+          </div>
+          <a href="http://calgan.dev/krk-iam" target="_blank" rel="noopener noreferrer" class="code-chip" style="text-decoration: none; font-size: 0.78rem; margin-top: 8px;">calgan.dev/krk-iam</a>
+        </div>
+      </div>
+
+      <div class="keyword-row">
+        <div class="sticker" style="background: var(--yellow);">🔑 Zero Static Keys</div>
+        <div class="sticker" style="background: var(--mint);">🛡️ Workload Identity</div>
+        <div class="sticker" style="background: #E0E7FF;">✅ SLSA Provenance</div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 2: WHO AM I ==================== -->
+    <section class="slide" data-notes="Quick intro! I'm Çalgan Aygün, a DevSecOps Generalist at pipelines.company and a Google Developer Expert (GDE) in Cloud based in Warsaw. Outside of cloud security, pipelines, and AI agents, I operate my own personal BGP Autonomous System (AS218375) and I'm an amateur radio operator under callsign SQ5CA.">
+      <div class="pill-badge" style="background: var(--yellow);">00 // $ WHOAMI</div>
+      <h2>Çalgan <span class="hl-mint">Aygün</span></h2>
+
+      <div class="compare-grid">
+        <!-- Left Card: Photo + Role & GDE -->
+        <div class="visual-card" style="background: #EFF6FF; padding: 28px;">
+          <span class="card-tag" style="background: var(--gcp-blue); color: white;">SPEAKER PROFILE</span>
+          <img
+            src="https://calganaygun.com/static/notes/speaker_profile_square.jpeg"
+            alt="Çalgan Aygün"
+            style="width: 118px; height: 118px; border-radius: 50%; object-fit: cover; border: 3px solid var(--ink); box-shadow: 4px 4px 0px var(--ink); margin-bottom: 14px; background: var(--yellow);"
+          />
+          <div class="card-headline" style="font-size: 1.55rem;">DevSecOps Generalist @ <span class="hl-yellow" style="font-size: 1.35rem; padding: 1px 10px;">pipelines.company</span></div>
+          <p style="font-weight: 800; font-size: 1.15rem; color: var(--gcp-blue); margin-top: 8px;">
+            ☁️ Google Developer Expert (GDE) — Cloud
+          </p>
+          <p style="font-weight: 700; color: var(--ink-soft); margin-top: 6px; font-size: 0.95rem;">
+            📍 Warsaw, Poland • Cloud, DevSecOps, Back-End, IoT &amp; AI
+          </p>
+        </div>
+
+        <!-- Right Card: Callsign, ASN & Interests -->
+        <div class="visual-card" style="background: #FEF9C3; padding: 28px; align-items: flex-start; text-align: left;">
+          <span class="card-tag" style="background: var(--mint); color: var(--ink);">NETWORK, RADIO &amp; HARDWARE</span>
+          <div style="width: 100%; display: flex; flex-direction: column; gap: 14px; margin-top: 6px;">
+            <div style="background: var(--white); border: var(--border); box-shadow: var(--shadow-sm); border-radius: 16px; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-weight: 800; font-size: 1.1rem;">📡 Amateur Radio Callsign</span>
+              <span class="code-chip" style="margin-top: 0; font-size: 1.05rem;">SQ5CA</span>
+            </div>
+
+            <div style="background: var(--white); border: var(--border); box-shadow: var(--shadow-sm); border-radius: 16px; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-weight: 800; font-size: 1.1rem;">🌐 Personal BGP ASN</span>
+              <span class="code-chip" style="margin-top: 0; font-size: 1.05rem; color: var(--mint);">AS218375</span>
+            </div>
+
+            <div style="background: var(--white); border: var(--border); box-shadow: var(--shadow-sm); border-radius: 16px; padding: 12px 18px;">
+              <div style="font-weight: 800; font-size: 1.02rem; margin-bottom: 4px;">🚀 Beyond the Terminal</div>
+              <div style="font-weight: 700; font-size: 0.92rem; color: var(--ink-soft);">
+                Model Rocketry • Amateur Radio • Photography • BGP Routing
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="keyword-row">
-        <div class="sticker" style="background: var(--yellow);">🔥 Zero Static Keys</div>
-        <div class="sticker" style="background: var(--mint);">🪪 Workload Identity</div>
-        <div class="sticker" style="background: #E0E7FF;">🔏 SLSA Provenance</div>
+        <a class="sticker" href="https://www.linkedin.com/in/calganaygun" target="_blank" rel="noopener noreferrer" style="background: #DBEAFE; text-decoration: none; color: var(--ink);">💼 linkedin.com/in/calganaygun ↗</a>
+        <a class="sticker" href="https://calganaygun.com" target="_blank" rel="noopener noreferrer" style="background: var(--white); text-decoration: none; color: var(--ink);">🌐 calganaygun.com ↗</a>
+        <a class="sticker" href="https://pipelines.company" target="_blank" rel="noopener noreferrer" style="background: var(--mint); text-decoration: none; color: var(--ink);">⚙️ pipelines.company ↗</a>
+        <a class="sticker" href="https://github.com/calganaygun" target="_blank" rel="noopener noreferrer" style="background: #E0E7FF; text-decoration: none; color: var(--ink);">💻 github.com/calganaygun ↗</a>
       </div>
     </section>
 
-    <!-- ==================== SLIDE 2: CASTLE VS DELIVERY TRUCK ==================== -->
+    <!-- ==================== SLIDE 3: CASTLE VS DELIVERY TRUCK ==================== -->
     <section class="slide" data-notes="Think of your production GKE cluster like a fortress: firewalls, private nodes, VPCs. Why would an attacker fight your lasers when your CI/CD delivery truck has 'roles/owner' and drives right through the front gate every 10 minutes?">
       <div class="pill-badge" style="background: var(--yellow);">01 // THE PLOT TWIST</div>
       <h2>Why Fight the <span class="hl-blue">Fortress</span>...<br/>When You Can Hijack the <span class="hl-coral">Delivery Truck?</span></h2>
@@ -786,7 +1019,7 @@
       <div class="compare-grid">
         <div class="visual-card" style="background: #EFF6FF;">
           <span class="card-tag" style="background: var(--gcp-blue); color: white;">PRODUCTION RUNTIME</span>
-          <div class="big-icon">🏰🛡️⚡</div>
+          <div class="big-icon">🏰🛡️</div>
           <div class="card-headline">Hardened GKE Fortress</div>
           <div class="keyword-row" style="margin-top:10px;">
             <span class="code-chip">Private Nodes</span>
@@ -797,7 +1030,7 @@
 
         <div class="visual-card bad">
           <span class="card-tag" style="background: var(--coral); color: white;">CI/CD PIPELINE</span>
-          <div class="big-icon" style="animation: floatBob 1.5s infinite;">🚚💨🔓</div>
+          <div class="big-icon" style="animation: floatBob 1.5s infinite;">🚚💨</div>
           <div class="card-headline">VIP Delivery Truck</div>
           <div class="keyword-row" style="margin-top:10px;">
             <span class="code-chip" style="background:var(--coral);color:#fff;">roles/owner</span>
@@ -820,15 +1053,15 @@
             <div class="code-chip">tj-actions/changed-files@v45</div>
           </div>
 
-          <div style="font-size: 3.2rem;">👉</div>
+          <div style="font-size: 3.2rem; font-weight: 800;">→</div>
 
           <div class="danger-pulse-box" style="background:var(--coral); color:white; border:var(--border); border-radius:22px; padding:20px 30px;">
-            <div style="font-size: 3.8rem;">💣🧠</div>
+            <div style="font-size: 3.8rem;">⚠️</div>
             <div style="font-family:var(--font-display); font-size:1.5rem; font-weight:700;">memdump.py</div>
             <div style="font-family:var(--font-mono); font-size:0.85rem;">Dumps Runner RAM to Logs!</div>
           </div>
 
-          <div style="font-size: 3.2rem;">👉</div>
+          <div style="font-size: 3.2rem; font-weight: 800;">→</div>
 
           <div style="background:var(--yellow); border:var(--border); box-shadow:var(--shadow); border-radius:22px; padding:20px 30px;">
             <div style="font-family:var(--font-display); font-size:3rem; font-weight:700;">23,000+</div>
@@ -852,14 +1085,14 @@
       <div class="worm-playground" id="wormBox">
         <div class="repo-node" style="top: 18px; left: 24px;">📦 keyv &amp; 400+ npm pkgs</div>
         <div class="repo-node" style="bottom: 18px; left: 34px;">⚡ pnpm cache + OIDC RAM</div>
-        <div class="repo-node" style="top: 18px; left: 42%;">⛓️ Ethereum Smart Contract C2</div>
-        <div class="repo-node" style="bottom: 18px; left: 44%;">🤖 Rogue Runner: SHA1HULUD</div>
+        <div class="repo-node" style="top: 18px; left: 42%;">🔗 Ethereum Smart Contract C2</div>
+        <div class="repo-node" style="bottom: 18px; left: 44%;">⚙️ Rogue Runner: SHA1HULUD</div>
         <div class="repo-node" style="top: 22px; right: 24px;">🔑 GCP / K8s / Vault Keys</div>
-        <div class="repo-node" style="bottom: 20px; right: 24px;">🔀 pull_request_target</div>
+        <div class="repo-node" style="bottom: 20px; right: 24px;">⚠️ pull_request_target</div>
 
         <!-- Big Worm 1: ChainDrop (Aug 2026) -->
         <div class="worm-container" id="theWorm">
-          <div class="worm-segment" id="wormHead1">😈</div>
+          <div class="worm-segment" id="wormHead1">🐛</div>
           <div class="worm-segment">CHAIN</div>
           <div class="worm-segment">DROP</div>
           <div class="worm-segment">BUN</div>
@@ -896,7 +1129,7 @@
         <div class="incident-card" style="background: #FFF0F2;">
           <div>
             <div class="incident-header">
-              <div class="incident-title">⛓️ ChainDrop Worm</div>
+              <div class="incident-title">🐛 ChainDrop Worm</div>
               <span class="code-chip" style="margin-top:0;background:var(--coral);color:#fff;">Aug 2026</span>
             </div>
             <div class="incident-keywords">
@@ -935,7 +1168,7 @@
         <div class="incident-card" style="background: #FEF9C3;">
           <div>
             <div class="incident-header">
-              <div class="incident-title">🏜️ Shai-Hulud 2.0</div>
+              <div class="incident-title">🐛 Shai-Hulud 2.0</div>
               <span class="code-chip" style="margin-top:0;">Nov 2025</span>
             </div>
             <div class="incident-keywords">
@@ -965,7 +1198,7 @@
           </div>
           <div class="incident-links">
             <a class="link-pill" href="https://nvd.nist.gov/vuln/detail/CVE-2025-30066" target="_blank" rel="noopener noreferrer">🔗 NVD CVE ↗</a>
-            <a class="link-pill" href="https://www.cisa.gov/news-events/alerts/2025/03/18/supply-chain-compromise-third-party-github-action-cve-2025-30066" target="_blank" rel="noopener noreferrer">🏛️ CISA Alert ↗</a>
+            <a class="link-pill" href="https://www.cisa.gov/news-events/alerts/2025/03/18/supply-chain-compromise-third-party-github-action-cve-2025-30066" target="_blank" rel="noopener noreferrer">🛡️ CISA Alert ↗</a>
           </div>
         </div>
 
@@ -973,7 +1206,7 @@
         <div class="incident-card" style="background: #E0F2FE;">
           <div>
             <div class="incident-header">
-              <div class="incident-title">🔀 Nx `s1ngularity`</div>
+              <div class="incident-title">⚠️ Nx `s1ngularity`</div>
               <span class="code-chip" style="margin-top:0;background:var(--gcp-blue);color:#fff;">Aug 2025</span>
             </div>
             <div class="incident-keywords">
@@ -992,7 +1225,7 @@
         <div class="incident-card" style="background: #D1FAE5;">
           <div>
             <div class="incident-header">
-              <div class="incident-title">👻 `GhostAction`</div>
+              <div class="incident-title">⚠️ `GhostAction`</div>
               <span class="code-chip" style="margin-top:0;background:var(--ink);color:var(--mint);">Sep 2025</span>
             </div>
             <div class="incident-keywords">
@@ -1009,15 +1242,81 @@
       </div>
     </section>
 
-    <!-- ==================== SLIDE 6: IMMORTAL JSON KEYS ==================== -->
+    <!-- ==================== SLIDE 6 (NEW): GPG COMMIT SIGNING & PHYSICAL YUBIKEYS ==================== -->
+    <section class="slide" data-notes="Authenticity and integrity are the main concerns. Anyone can create a commit using another person's name and email address, so we need to ensure every commit comes from the correct person for auditability—and if a signed commit is modified, its signature becomes invalid immediately! Even better: if you enforce a policy that only allows GPG signatures from maintainers' physical FIDO/YubiKey keys, stolen GitHub credentials aren't enough to land malicious code in a repository, since the attacker doesn't have the physical key!">
+      <div class="pill-badge" style="background: var(--mint);">05 // PILLAR 0: COMMIT AUTHENTICITY &amp; INTEGRITY</div>
+      <h2>Stolen Token ≠ Valid Commit:<br/>Sign with Physical <span class="hl-yellow">YubiKey GPG!</span></h2>
+
+      <div class="compare-grid">
+        <div class="visual-card bad">
+          <span class="card-tag" style="background: var(--coral); color: white;">UNSIGNED / SPOOFED COMMIT</span>
+          <div class="big-icon">🔓</div>
+          <div class="card-headline">Anyone Can Spoof Name &amp; Email</div>
+          <p style="font-weight: 700; color: var(--ink-soft);">Stolen GitHub PAT = Attacker Pushes Malicious Code</p>
+          <div class="code-chip" style="background: var(--coral); color: white;">git commit --author="Maintainer" (Unverified)</div>
+        </div>
+
+        <div class="visual-card good">
+          <span class="card-tag" style="background: var(--mint); color: var(--ink);">HARDWARE GPG (YUBIKEY / FIDO)</span>
+          <div class="big-icon">🔐</div>
+          <div class="card-headline">Physical Key Required</div>
+          <p style="font-weight: 700; color: var(--ink-soft);">Altered Commit = Invalid Signature (Tamper-Proof!)</p>
+          <div class="code-chip" style="background: var(--ink); color: var(--mint);">gpg --card-status // Verified Signature</div>
+        </div>
+      </div>
+
+      <div class="keyword-row">
+        <div class="sticker" style="background: var(--yellow);">✅ Authenticity: Audit Who Signed</div>
+        <div class="sticker" style="background: var(--mint);">🛡️ Integrity: Detects Any Tampering</div>
+        <div class="sticker" style="background: #E0E7FF;">🔑 Physical Key: Stolen Token Can't Push</div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 7 (NEW): GPG SIGNING YAML & CLI ==================== -->
+    <section class="slide" data-notes="Here is how to enforce hardware-backed GPG commit signing in Git and verify it in your CI pipeline so even an attacker with write access and stolen GitHub credentials cannot land malicious code without physically touching the maintainer's YubiKey.">
+      <div class="pill-badge" style="background: var(--yellow);">05B // PILLAR 0: GIT CLI &amp; CI VERIFICATION YAML</div>
+      <h2>Enforce <span class="hl-yellow">GPG Signing</span> &amp; <span class="hl-mint">Hardware Keys</span></h2>
+
+      <div class="compare-grid">
+        <div class="big-code-card">
+          <span class="card-tag" style="background: var(--mint); color: var(--ink);">💻 GIT + YUBIKEY GPG CLI</span>
+          <pre class="big-code-pre"><span class="k-c"># 1. Lock Git to Maintainer YubiKey GPG ID</span>
+<span class="k-y">$ git config --global user.signingkey</span> 0x9F8B1234
+<span class="k-y">$ git config --global commit.gpgsign</span> <span class="k-g">true</span>
+<span class="k-y">$ git config --global tag.gpgSign</span> <span class="k-g">true</span>
+
+<span class="k-c"># 2. Requires physical YubiKey touch!</span>
+<span class="k-g">$ git commit -S -m "feat: release v1.0.0"</span></pre>
+        </div>
+
+        <div class="big-code-card">
+          <span class="card-tag" style="background: var(--yellow); color: var(--ink);">📄 GITHUB RULESET &amp; CI VERIFY YAML</span>
+          <pre class="big-code-pre"><span class="k-c"># GitHub Branch Protection / Ruleset</span>
+<span class="k-b">required_signatures:</span> <span class="k-g">true</span> <span class="k-c"># Block unsigned push!</span>
+
+<span class="k-c"># CI Step: Verify Hardware GPG Keyring</span>
+- <span class="k-b">name:</span> Verify Maintainer Hardware GPG
+  <span class="k-b">run:</span> |
+    <span class="k-y">gpg --import .github/maintainer-yubikeys.asc</span>
+    <span class="k-g">git verify-commit HEAD</span></pre>
+        </div>
+      </div>
+
+      <div class="keyword-row">
+        <div class="sticker" style="background: #EFF6FF;">⚙️ GitHub UI: Settings → Rules → Require signed commits</div>
+        <div class="sticker" style="background: var(--coral); color: white;">🚫 Stolen PAT Without YubiKey = REJECTED</div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 8: IMMORTAL JSON KEYS ==================== -->
     <section class="slide" data-notes="Why did ChainDrop and Shai-Hulud do so much damage? Because teams still export GCP Service Account JSON keys! A JSON key is a vampire—it lives until the year 9999 unless you stake it through the heart. On GCP, we kill it forever with one Organization Policy.">
-      <div class="pill-badge" style="background: var(--coral); color: white;">05 // PILLAR 1: KILL STATIC SECRETS</div>
+      <div class="pill-badge" style="background: var(--coral); color: white;">06 // PILLAR 1: KILL STATIC SECRETS</div>
       <h2>Vampire Keys vs. <span class="hl-mint">Melting Ice Cubes</span></h2>
 
       <div class="compare-grid">
         <div class="visual-card bad">
           <span class="card-tag" style="background: var(--coral); color: white;">STATIC JSON KEY</span>
-          <div class="big-icon">🧛‍♂️🗝️</div>
+          <div class="big-icon">🗝️</div>
           <div class="card-headline">Lives Until Year 9999</div>
           <p style="font-weight: 700; color: var(--ink-soft);">Stolen by ChainDrop &amp; TruffleHog</p>
           <div class="code-chip" style="background: var(--coral); color: white;">service-account-key.json</div>
@@ -1025,7 +1324,7 @@
 
         <div class="visual-card good">
           <span class="card-tag" style="background: var(--mint); color: var(--ink);">EPHEMERAL TOKEN</span>
-          <div class="big-icon">🧊⏱️</div>
+          <div class="big-icon">⏱️</div>
           <div class="card-headline">Melts in 60 Minutes</div>
           <p style="font-weight: 700; color: var(--ink-soft);">Issued On-Demand via OIDC</p>
           <div class="code-chip" style="background: var(--ink); color: var(--mint);">iam.disableServiceAccountKeyCreation</div>
@@ -1033,31 +1332,64 @@
       </div>
     </section>
 
-    <!-- ==================== SLIDE 7: WORKLOAD IDENTITY FEDERATION PASSPORT ==================== -->
+    <!-- ==================== SLIDE 9 (NEW): PILLAR 1 YAML & CLI ==================== -->
+    <section class="slide" data-notes="Here is the exact YAML and CLI command on Google Cloud to kill static JSON keys across your project or organization. No need to switch to the terminal!">
+      <div class="pill-badge" style="background: var(--yellow);">06B // PILLAR 1: YAML &amp; GCP CLI</div>
+      <h2>Kill <span class="hl-coral">JSON Keys</span> in 5 Lines</h2>
+
+      <div class="compare-grid">
+        <div class="big-code-card">
+          <span class="card-tag" style="background: var(--yellow); color: var(--ink);">📄 disable-sa-keys.yaml</span>
+          <pre class="big-code-pre"><span class="k-b">name:</span> projects/PROD/policies/
+  <span class="k-g">iam.disableServiceAccountKeyCreation</span>
+<span class="k-b">spec:</span>
+  <span class="k-b">rules:</span>
+  - <span class="k-b">enforce:</span> <span class="k-y">true</span></pre>
+        </div>
+
+        <div class="big-code-card">
+          <span class="card-tag" style="background: var(--mint); color: var(--ink);">💻 GCP CLI COMMANDS</span>
+          <pre class="big-code-pre"><span class="k-c"># 1. Audit existing keys</span>
+<span class="k-y">$ gcloud iam service-accounts keys list</span> \
+    --managed-by=user
+
+<span class="k-c"># 2. Block key creation forever</span>
+<span class="k-g">$ gcloud org-policies set-policy</span> \
+    disable-sa-keys.yaml</pre>
+        </div>
+      </div>
+
+      <div class="keyword-row">
+        <div class="sticker" style="background: #EFF6FF;">☁️ GCP UI: IAM &amp; Admin → Organization Policies</div>
+        <div class="sticker" style="background: var(--coral); color: white;">🚫 Keys Create = PERMISSION_DENIED</div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 10: WORKLOAD IDENTITY FEDERATION PASSPORT ==================== -->
     <section class="slide" data-notes="How does Workload Identity Federation (WIF) work without storing any secret in GitHub? It's airport passport control! GitHub prints a signed OIDC passport for the running job, Google Cloud STS checks the signature at the border, and hands back a 1-hour visitor badge.">
-      <div class="pill-badge" style="background: var(--gcp-blue); color: white;">06 // PILLAR 2: WORKLOAD IDENTITY FEDERATION</div>
+      <div class="pill-badge" style="background: var(--gcp-blue); color: white;">07 // PILLAR 2: WORKLOAD IDENTITY FEDERATION</div>
       <h2>Zero Stored Secrets: <span class="hl-yellow">Passport Control</span></h2>
 
       <div class="stage-box" style="background: #F8FAFC;">
         <div style="display:flex; align-items:center; justify-content:space-around; flex-wrap:wrap; gap:16px;">
           <div style="background:var(--white);border:var(--border);box-shadow:var(--shadow);border-radius:22px;padding:24px;width:270px;">
-            <div style="font-size:4rem;">🏃‍♂️📄</div>
+            <div style="font-size:4rem;">⚙️</div>
             <div style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;">1. CI Runner</div>
             <div class="code-chip">Signed OIDC JWT</div>
           </div>
 
-          <div style="font-size:3rem;">✈️➡️</div>
+          <div style="font-size:3rem;font-weight:800;">→</div>
 
           <div style="background:var(--yellow);border:var(--border);box-shadow:var(--shadow);border-radius:22px;padding:24px;width:290px;">
-            <div style="font-size:4rem;">🛂🔍</div>
+            <div style="font-size:4rem;">🛡️</div>
             <div style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;">2. GCP STS Customs</div>
             <div class="code-chip">Checks CEL Rules</div>
           </div>
 
-          <div style="font-size:3rem;">✅➡️</div>
+          <div style="font-size:3rem;font-weight:800;">→</div>
 
           <div style="background:var(--mint);border:var(--border);box-shadow:var(--shadow);border-radius:22px;padding:24px;width:270px;">
-            <div style="font-size:4rem;">🎟️⏳</div>
+            <div style="font-size:4rem;">🔑</div>
             <div style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;">3. Visitor Badge</div>
             <div class="code-chip">TTL: 15–60 Mins</div>
           </div>
@@ -1065,23 +1397,23 @@
       </div>
     </section>
 
-    <!-- ==================== SLIDE 8: THE OIDC VIP LIST TRAP ==================== -->
+    <!-- ==================== SLIDE 11: THE OIDC VIP LIST TRAP ==================== -->
     <section class="slide" data-notes="Here is how Mini Shai-Hulud and Nx pwn-requests bypass naive OIDC! Teams switch to OIDC, but only check 'repository == acme/app'. That lets an untrusted Pull Request or feature branch mint a production token! Click the button to turn on the VIP CEL Condition!">
-      <div class="pill-badge" style="background: var(--yellow);">07 // THE #1 OIDC MISTAKE</div>
+      <div class="pill-badge" style="background: var(--yellow);">08 // THE #1 OIDC MISTAKE</div>
       <h2>Who's on the <span class="hl-purple">VIP List?</span></h2>
 
       <div class="stage-box" id="bouncerStage" style="background: #FFF0F2; transition: background 0.3s ease;">
         <div id="bouncerBadView" style="display:flex; align-items:center; justify-content:space-around; flex-wrap:wrap;">
           <div>
-            <div style="font-size:4.5rem;">🤡🔀</div>
+            <div style="font-size:4.5rem;">⚠️</div>
             <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:700;">Mini Shai-Hulud PR</div>
             <div class="code-chip" style="background:var(--coral);color:#fff;">ref: refs/pull/42/merge</div>
           </div>
 
-          <div style="font-size:3.5rem;">🚪🏃‍♂️💨</div>
+          <div style="font-size:3.5rem;font-weight:800;">→</div>
 
           <div>
-            <div style="font-size:4.5rem;">😴🛂</div>
+            <div style="font-size:4.5rem;">🔓</div>
             <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:700;">Lazy WIF Policy</div>
             <div class="code-chip">attribute.repo == "acme/app"</div>
           </div>
@@ -1089,15 +1421,15 @@
 
         <div id="bouncerGoodView" style="display:none; align-items:center; justify-content:space-around; flex-wrap:wrap;">
           <div>
-            <div style="font-size:4.5rem;">🤡🚫</div>
+            <div style="font-size:4.5rem;">🚫</div>
             <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:700;">PR &amp; Rogue Runner Blocked!</div>
             <div class="code-chip" style="background:var(--coral);color:#fff;">403 Access Denied</div>
           </div>
 
-          <div style="font-size:3.5rem;">🛑✋</div>
+          <div style="font-size:3.5rem;">🛑</div>
 
           <div>
-            <div style="font-size:4.5rem;">🕶️🛂</div>
+            <div style="font-size:4.5rem;">🛡️</div>
             <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:700;">CEL Attribute Condition</div>
             <div class="code-chip" style="color:var(--mint);">ref == 'refs/heads/main' &amp;&amp; runner == 'github-hosted'</div>
           </div>
@@ -1106,20 +1438,57 @@
 
       <div class="keyword-row">
         <button class="neo-btn" style="background: var(--yellow); font-size: 1.15rem; padding: 12px 24px;" onclick="toggleBouncer()">
-          🕶️ Toggle Strict CEL Bouncer!
+          🔒 Toggle Strict CEL Policy
         </button>
       </div>
     </section>
 
-    <!-- ==================== SLIDE 9: GKE WORKLOAD IDENTITY ==================== -->
+    <!-- ==================== SLIDE 12 (NEW): PILLAR 2 YAML & CLI ==================== -->
+    <section class="slide" data-notes="On the left is our hardened GitHub Actions YAML: pinned 40-char commit SHAs, --ignore-scripts, and WIF auth. On the right is the gcloud CLI command with the CEL condition that blocks PRs and rogue self-hosted runners!">
+      <div class="pill-badge" style="background: var(--gcp-blue); color: white;">08B // PILLAR 2: YAML &amp; GCP CLI</div>
+      <h2>Hardened <span class="hl-yellow">Workflow YAML</span> &amp; <span class="hl-purple">CEL Rule</span></h2>
+
+      <div class="compare-grid">
+        <div class="big-code-card">
+          <span class="card-tag" style="background: var(--yellow); color: var(--ink);">📄 .github/workflows/deploy.yml</span>
+          <pre class="big-code-pre"><span class="k-b">permissions:</span>
+  <span class="k-b">contents:</span> read
+  <span class="k-b">id-token:</span> <span class="k-g">write</span>
+<span class="k-b">steps:</span>
+- <span class="k-b">uses:</span> <span class="k-g">actions/checkout@11bd7190...</span> <span class="k-c"># 40-char SHA</span>
+- <span class="k-b">run:</span>  <span class="k-y">npm ci --ignore-scripts</span>
+- <span class="k-b">uses:</span> <span class="k-g">google-github-actions/auth@6fc4af4b...</span>
+  <span class="k-b">with:</span>
+    <span class="k-b">workload_identity_provider:</span> <span class="k-y">$WIF_PROVIDER</span></pre>
+        </div>
+
+        <div class="big-code-card">
+          <span class="card-tag" style="background: var(--mint); color: var(--ink);">💻 GCP WIF CEL CLI</span>
+          <pre class="big-code-pre"><span class="k-y">$ gcloud iam workload-identity-pools \
+    providers create-oidc</span> github-oidc \
+  <span class="k-b">--issuer-uri</span>="https://token.actions..." \
+  <span class="k-b">--attribute-condition</span>=<span class="k-g">"
+    assertion.repository == 'acme/app' &amp;&amp;
+    assertion.ref == 'refs/heads/main' &amp;&amp;
+    assertion.runner_environment == 'github-hosted'"</span></pre>
+        </div>
+      </div>
+
+      <div class="keyword-row">
+        <div class="sticker" style="background: #EFF6FF;">☁️ GCP UI: IAM → Workload Identity Federation</div>
+        <div class="sticker" style="background: var(--mint);">🛡️ Direct PrincipalSet IAM Binding</div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 13: GKE WORKLOAD IDENTITY ==================== -->
     <section class="slide" data-notes="What about inside GKE? Don't let all your pods share the big Node Default Service Account like one giant master key on a lanyard! With GKE Workload Identity Federation, every Kubernetes ServiceAccount gets its own tiny, least-privilege IAM badge.">
-      <div class="pill-badge" style="background: var(--mint);">08 // PILLAR 3: GKE WORKLOAD IDENTITY</div>
+      <div class="pill-badge" style="background: var(--mint);">09 // PILLAR 3: GKE WORKLOAD IDENTITY</div>
       <h2>Stop Sharing the <span class="hl-coral">Master Key</span> on GKE!</h2>
 
       <div class="compare-grid">
         <div class="visual-card bad">
           <span class="card-tag" style="background: var(--coral); color: white;">LEGACY NODE SA</span>
-          <div class="big-icon">🚢🔑💥</div>
+          <div class="big-icon">🔓</div>
           <div class="card-headline">1 Master Key for All Pods</div>
           <p style="font-weight:700; color:var(--ink-soft);">1 Pod Hacked = Whole Project Owned</p>
           <div class="code-chip" style="background:var(--coral);color:#fff;">...-compute@developer.gserviceaccount.com</div>
@@ -1127,31 +1496,69 @@
 
         <div class="visual-card good">
           <span class="card-tag" style="background: var(--mint);">GKE WORKLOAD IDENTITY</span>
-          <div class="big-icon">📦🪪✨</div>
-          <div class="card-headline">1 Pod = 1 Tiny Badge</div>
+          <div class="big-icon">🛡️</div>
+          <div class="card-headline">1 Pod = 1 Scoped Identity</div>
           <p style="font-weight:700; color:var(--ink-soft);">Direct K8s ServiceAccount Binding</p>
           <div class="code-chip">principal://.../ns/prod/sa/checkout</div>
         </div>
       </div>
     </section>
 
-    <!-- ==================== SLIDE 10: SLSA & BINARY AUTHORIZATION ==================== -->
+    <!-- ==================== SLIDE 14 (NEW): PILLAR 3 YAML & CLI ==================== -->
+    <section class="slide" data-notes="Here is the Kubernetes Pod YAML on the left and the direct GCP IAM binding on the right. Notice there is no intermediate Google Service Account needed—we bind Secret Manager directly to the Kubernetes ServiceAccount!">
+      <div class="pill-badge" style="background: var(--mint);">09B // PILLAR 3: K8S YAML &amp; GCP CLI</div>
+      <h2>Direct <span class="hl-mint">Pod Identity</span> in YAML &amp; CLI</h2>
+
+      <div class="compare-grid">
+        <div class="big-code-card">
+          <span class="card-tag" style="background: var(--yellow); color: var(--ink);">📄 k8s/deployment-hardened.yaml</span>
+          <pre class="big-code-pre"><span class="k-b">apiVersion:</span> apps/v1
+<span class="k-b">kind:</span> Deployment
+<span class="k-b">spec:</span>
+  <span class="k-b">template:</span>
+    <span class="k-b">spec:</span>
+      <span class="k-b">serviceAccountName:</span> <span class="k-g">payments-api-ksa</span>
+      <span class="k-b">securityContext:</span>
+        <span class="k-b">runAsNonRoot:</span> <span class="k-y">true</span>
+      <span class="k-b">containers:</span>
+      - <span class="k-b">image:</span> <span class="k-g">.../payments-api@sha256:e882...</span></pre>
+        </div>
+
+        <div class="big-code-card">
+          <span class="card-tag" style="background: var(--mint); color: var(--ink);">💻 DIRECT KSA IAM BINDING</span>
+          <pre class="big-code-pre"><span class="k-c"># Bind K8s SA directly to GCP Secret!</span>
+<span class="k-y">$ gcloud secrets add-iam-policy-binding</span> \
+    stripe-webhook-secret \
+  <span class="k-b">--role</span>="roles/secretmanager.secretAccessor" \
+  <span class="k-b">--member</span>=<span class="k-g">"principal://iam.googleapis.com/
+    .../workloadIdentityPools/PROJECT.svc.id.goog/
+    subject/ns/payments-prod/sa/payments-api-ksa"</span></pre>
+        </div>
+      </div>
+
+      <div class="keyword-row">
+        <div class="sticker" style="background: #EFF6FF;">☁️ GCP UI: GKE → Cluster → Security → Workload Identity</div>
+        <div class="sticker" style="background: var(--yellow);">🔒 GKE Metadata Server Enabled</div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 15: SLSA & BINARY AUTHORIZATION ==================== -->
     <section class="slide" data-notes="During the Shai-Hulud & ChainDrop waves, even SLSA Level 2 wasn't enough when local maintainer tokens were stolen. You need SLSA Level 3 isolated builds (like Google Cloud Build) + Binary Authorization on GKE to block any container image that wasn't built in your isolated, hermetic pipeline!">
-      <div class="pill-badge" style="background: var(--yellow);">09 // PILLAR 4: ARTIFACT PROVENANCE</div>
-      <h2>No <span class="hl-mint">Wax Seal?</span> No Entry to GKE!</h2>
+      <div class="pill-badge" style="background: var(--yellow);">10 // PILLAR 4: ARTIFACT PROVENANCE</div>
+      <h2>No <span class="hl-mint">Provenance?</span> No Entry to GKE!</h2>
 
       <div class="stage-box" style="background: #ECFDF5;">
         <div style="display:flex; align-items:center; justify-content:space-around; flex-wrap:wrap; gap:20px;">
           <div>
-            <div style="font-size:4.2rem;">🏭🔏</div>
+            <div style="font-size:4.2rem;">🏗️</div>
             <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:700;">Cloud Build</div>
             <div class="code-chip">SLSA Level 3 Stamp</div>
           </div>
 
-          <div style="font-size:3rem;">➡️</div>
+          <div style="font-size:3rem;font-weight:800;">→</div>
 
           <div>
-            <div style="font-size:4.2rem;">🦍🛡️</div>
+            <div style="font-size:4.2rem;">🛡️</div>
             <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:700;">Binary Authorization</div>
             <div class="code-chip">GKE Admission Gate</div>
           </div>
@@ -1159,7 +1566,7 @@
           <div style="font-size:3rem;">🛑</div>
 
           <div class="blocked-box" style="background:var(--coral);color:#fff;border:var(--border);box-shadow:var(--shadow);border-radius:18px;padding:16px 22px;">
-            <div style="font-size:3rem;">🏴‍☠️📦</div>
+            <div style="font-size:3rem;">🚫</div>
             <div style="font-family:var(--font-mono);font-weight:700;">rogue-app:latest (BLOCKED)</div>
           </div>
         </div>
@@ -1171,35 +1578,113 @@
       </div>
     </section>
 
-    <!-- ==================== SLIDE 11: 4 STICKERS TO TAKE HOME ==================== -->
-    <section class="slide" data-notes="That's the whole philosophy! When you go back to your desk, remember these 4 stickers: Pin your SHAs, Burn your JSON keys, Lock your OIDC CEL conditions (including runner_environment == 'github-hosted' to block SHA1HULUD rogue runners!), and Stamp your artifacts. Now let's switch to the GCP Console and terminal for the live demo!">
-      <div class="pill-badge" style="background: var(--mint);">10 // MONDAY MORNING CHEAT SHEET</div>
-      <h2>4 Rules to <span class="hl-yellow">Sleep at Night</span> 😴</h2>
+    <!-- ==================== SLIDE 16 (NEW): PILLAR 4 YAML & CLI ==================== -->
+    <section class="slide" data-notes="Here is how you turn on Immutable Tags, SLSA Level 3 Provenance in Cloud Build, and GKE Binary Authorization! On the right, when an attacker runs kubectl apply on an unsigned image, the GKE admission webhook blocks it immediately.">
+      <div class="pill-badge" style="background: var(--yellow);">10B // PILLAR 4: YAML &amp; GCP CLI</div>
+      <h2>Stamp with <span class="hl-blue">Cloud Build</span>, Block with <span class="hl-coral">Binary Auth</span></h2>
+
+      <div class="compare-grid">
+        <div class="big-code-card">
+          <span class="card-tag" style="background: var(--mint); color: var(--ink);">💻 IMMUTABLE GAR + SLSA L3 CLI</span>
+          <pre class="big-code-pre"><span class="k-c"># 1. Lock tags in Artifact Registry</span>
+<span class="k-y">$ gcloud artifacts repositories create</span> prod \
+    --repository-format=docker <span class="k-g">--immutable-tags</span>
+
+<span class="k-c"># 2. Regional Cloud Build = SLSA Level 3!</span>
+<span class="k-y">$ gcloud builds submit</span> --region=us-central1 \
+    --tag=.../payments-api:v1.0.0</pre>
+        </div>
+
+        <div class="big-code-card">
+          <span class="card-tag" style="background: var(--coral); color: white;">📄 BINARY AUTH &amp; KUBECTL BLOCK</span>
+          <pre class="big-code-pre"><span class="k-b">defaultAdmissionRule:</span>
+  <span class="k-b">evaluationMode:</span> <span class="k-g">REQUIRE_ATTESTATION</span>
+  <span class="k-b">enforcementMode:</span> <span class="k-g">ENFORCED_BLOCK_AND_AUDIT_LOG</span>
+
+<span class="k-y">$ kubectl apply -f rogue-pod-attack.yaml</span>
+<span class="k-r">Error (Forbidden): Denied by Binary Auth!
+No valid SLSA L3 attestation found.</span></pre>
+        </div>
+      </div>
+
+      <div class="keyword-row">
+        <div class="sticker" style="background: #EFF6FF;">☁️ GCP UI: Artifact Registry &amp; Binary Authorization</div>
+        <div class="sticker" style="background: var(--mint);">✅ `--show-provenance` Verified</div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 17: STICKERS TO TAKE HOME ==================== -->
+    <section class="slide" data-notes="That's the whole philosophy! When you go back to your desk, remember these stickers: Sign commits with physical YubiKey GPG & Pin your SHAs, Burn your JSON keys, Lock your OIDC CEL conditions (including runner_environment == 'github-hosted' to block SHA1HULUD rogue runners!), and Stamp your artifacts!">
+      <div class="pill-badge" style="background: var(--mint);">11 // MONDAY MORNING CHEAT SHEET</div>
+      <h2>4 Rules to <span class="hl-yellow">Sleep at Night</span></h2>
 
       <div class="compare-grid" style="margin-top: 16px;">
         <div class="visual-card" style="min-height: 200px; background: #FEF9C3;">
-          <div style="font-size: 3.4rem;">📌</div>
-          <div class="card-headline">1. Pin Commit SHAs</div>
-          <div class="code-chip">No floating @v4 tags + --ignore-scripts</div>
+          <div style="font-size: 3.4rem;">🔐</div>
+          <div class="card-headline">1. YubiKey GPG + Pin SHAs</div>
+          <div class="code-chip">Physical GPG Sign + 40-char SHAs</div>
         </div>
 
         <div class="visual-card" style="min-height: 200px; background: #FFE4E6;">
-          <div style="font-size: 3.4rem;">🔥</div>
+          <div style="font-size: 3.4rem;">🔑</div>
           <div class="card-headline">2. Burn JSON Keys</div>
           <div class="code-chip">disableServiceAccountKeyCreation</div>
         </div>
 
         <div class="visual-card" style="min-height: 200px; background: #E0E7FF;">
-          <div style="font-size: 3.4rem;">🛂</div>
+          <div style="font-size: 3.4rem;">🛡️</div>
           <div class="card-headline">3. Check Branch &amp; Runner</div>
           <div class="code-chip">WIF CEL: main + github-hosted</div>
         </div>
 
         <div class="visual-card" style="min-height: 200px; background: #D1FAE5;">
-          <div style="font-size: 3.4rem;">🔏</div>
+          <div style="font-size: 3.4rem;">✅</div>
           <div class="card-headline">4. Stamp Artifacts</div>
           <div class="code-chip">SLSA L3 + Binary Auth</div>
         </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 19: ASK ME / REACH OUT & LINKEDIN QR ==================== -->
+    <section class="slide" data-notes="Thank you! If you have any questions about Workload Identity Federation, YubiKey GPG signing, SLSA Level 3, or pipeline security on Google Cloud and GKE—ask away now or scan the QR code to reach out to me on LinkedIn!">
+      <div class="pill-badge" style="background: var(--yellow);">12 // Q&amp;A &amp; CONNECT</div>
+      <h2>Questions? <span class="hl-mint">Ask Me</span> &amp; Reach Out!</h2>
+
+      <div class="compare-grid" style="margin-top: 12px;">
+        <!-- Left Card: LinkedIn QR Code -->
+        <div class="visual-card" style="background: #EFF6FF; padding: 28px;">
+          <span class="card-tag" style="background: var(--gcp-blue); color: white;">SCAN TO CONNECT ON LINKEDIN</span>
+          <div style="width: 195px; height: 195px; border: 3px solid var(--ink); border-radius: 18px; overflow: hidden; background: var(--white); padding: 6px; box-shadow: var(--shadow); margin-bottom: 12px;">
+            <svg viewBox="0 0 31 31" width="100%" height="100%" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg"><rect width="31" height="31" fill="#FFFFFF"/><path d="M1,1h1v1h-1zM2,1h1v1h-1zM3,1h1v1h-1zM4,1h1v1h-1zM5,1h1v1h-1zM6,1h1v1h-1zM7,1h1v1h-1zM10,1h1v1h-1zM11,1h1v1h-1zM12,1h1v1h-1zM17,1h1v1h-1zM18,1h1v1h-1zM19,1h1v1h-1zM20,1h1v1h-1zM21,1h1v1h-1zM23,1h1v1h-1zM24,1h1v1h-1zM25,1h1v1h-1zM26,1h1v1h-1zM27,1h1v1h-1zM28,1h1v1h-1zM29,1h1v1h-1zM1,2h1v1h-1zM7,2h1v1h-1zM11,2h1v1h-1zM13,2h1v1h-1zM14,2h1v1h-1zM15,2h1v1h-1zM16,2h1v1h-1zM17,2h1v1h-1zM18,2h1v1h-1zM21,2h1v1h-1zM23,2h1v1h-1zM29,2h1v1h-1zM1,3h1v1h-1zM3,3h1v1h-1zM4,3h1v1h-1zM5,3h1v1h-1zM7,3h1v1h-1zM9,3h1v1h-1zM10,3h1v1h-1zM13,3h1v1h-1zM15,3h1v1h-1zM16,3h1v1h-1zM20,3h1v1h-1zM23,3h1v1h-1zM25,3h1v1h-1zM26,3h1v1h-1zM27,3h1v1h-1zM29,3h1v1h-1zM1,4h1v1h-1zM3,4h1v1h-1zM4,4h1v1h-1zM5,4h1v1h-1zM7,4h1v1h-1zM9,4h1v1h-1zM10,4h1v1h-1zM12,4h1v1h-1zM13,4h1v1h-1zM14,4h1v1h-1zM15,4h1v1h-1zM17,4h1v1h-1zM18,4h1v1h-1zM23,4h1v1h-1zM25,4h1v1h-1zM26,4h1v1h-1zM27,4h1v1h-1zM29,4h1v1h-1zM1,5h1v1h-1zM3,5h1v1h-1zM4,5h1v1h-1zM5,5h1v1h-1zM7,5h1v1h-1zM9,5h1v1h-1zM10,5h1v1h-1zM11,5h1v1h-1zM12,5h1v1h-1zM15,5h1v1h-1zM17,5h1v1h-1zM18,5h1v1h-1zM19,5h1v1h-1zM20,5h1v1h-1zM21,5h1v1h-1zM23,5h1v1h-1zM25,5h1v1h-1zM26,5h1v1h-1zM27,5h1v1h-1zM29,5h1v1h-1zM1,6h1v1h-1zM7,6h1v1h-1zM9,6h1v1h-1zM15,6h1v1h-1zM16,6h1v1h-1zM17,6h1v1h-1zM23,6h1v1h-1zM29,6h1v1h-1zM1,7h1v1h-1zM2,7h1v1h-1zM3,7h1v1h-1zM4,7h1v1h-1zM5,7h1v1h-1zM6,7h1v1h-1zM7,7h1v1h-1zM9,7h1v1h-1zM11,7h1v1h-1zM13,7h1v1h-1zM15,7h1v1h-1zM17,7h1v1h-1zM19,7h1v1h-1zM21,7h1v1h-1zM23,7h1v1h-1zM24,7h1v1h-1zM25,7h1v1h-1zM26,7h1v1h-1zM27,7h1v1h-1zM28,7h1v1h-1zM29,7h1v1h-1zM9,8h1v1h-1zM13,8h1v1h-1zM15,8h1v1h-1zM16,8h1v1h-1zM20,8h1v1h-1zM21,8h1v1h-1zM1,9h1v1h-1zM3,9h1v1h-1zM4,9h1v1h-1zM5,9h1v1h-1zM6,9h1v1h-1zM7,9h1v1h-1zM10,9h1v1h-1zM11,9h1v1h-1zM12,9h1v1h-1zM14,9h1v1h-1zM15,9h1v1h-1zM16,9h1v1h-1zM18,9h1v1h-1zM19,9h1v1h-1zM20,9h1v1h-1zM23,9h1v1h-1zM24,9h1v1h-1zM25,9h1v1h-1zM26,9h1v1h-1zM27,9h1v1h-1zM5,10h1v1h-1zM6,10h1v1h-1zM9,10h1v1h-1zM10,10h1v1h-1zM12,10h1v1h-1zM13,10h1v1h-1zM14,10h1v1h-1zM17,10h1v1h-1zM18,10h1v1h-1zM19,10h1v1h-1zM20,10h1v1h-1zM22,10h1v1h-1zM23,10h1v1h-1zM24,10h1v1h-1zM25,10h1v1h-1zM29,10h1v1h-1zM1,11h1v1h-1zM3,11h1v1h-1zM6,11h1v1h-1zM7,11h1v1h-1zM10,11h1v1h-1zM11,11h1v1h-1zM14,11h1v1h-1zM15,11h1v1h-1zM16,11h1v1h-1zM18,11h1v1h-1zM23,11h1v1h-1zM1,12h1v1h-1zM4,12h1v1h-1zM5,12h1v1h-1zM6,12h1v1h-1zM8,12h1v1h-1zM9,12h1v1h-1zM11,12h1v1h-1zM12,12h1v1h-1zM17,12h1v1h-1zM20,12h1v1h-1zM21,12h1v1h-1zM22,12h1v1h-1zM24,12h1v1h-1zM26,12h1v1h-1zM28,12h1v1h-1zM1,13h1v1h-1zM2,13h1v1h-1zM5,13h1v1h-1zM6,13h1v1h-1zM7,13h1v1h-1zM8,13h1v1h-1zM11,13h1v1h-1zM18,13h1v1h-1zM20,13h1v1h-1zM26,13h1v1h-1zM27,13h1v1h-1zM1,14h1v1h-1zM4,14h1v1h-1zM5,14h1v1h-1zM6,14h1v1h-1zM9,14h1v1h-1zM10,14h1v1h-1zM13,14h1v1h-1zM14,14h1v1h-1zM17,14h1v1h-1zM18,14h1v1h-1zM19,14h1v1h-1zM20,14h1v1h-1zM21,14h1v1h-1zM22,14h1v1h-1zM23,14h1v1h-1zM25,14h1v1h-1zM29,14h1v1h-1zM2,15h1v1h-1zM4,15h1v1h-1zM5,15h1v1h-1zM7,15h1v1h-1zM11,15h1v1h-1zM12,15h1v1h-1zM13,15h1v1h-1zM14,15h1v1h-1zM15,15h1v1h-1zM16,15h1v1h-1zM17,15h1v1h-1zM19,15h1v1h-1zM21,15h1v1h-1zM22,15h1v1h-1zM23,15h1v1h-1zM24,15h1v1h-1zM26,15h1v1h-1zM27,15h1v1h-1zM2,16h1v1h-1zM4,16h1v1h-1zM6,16h1v1h-1zM10,16h1v1h-1zM14,16h1v1h-1zM16,16h1v1h-1zM24,16h1v1h-1zM25,16h1v1h-1zM28,16h1v1h-1zM1,17h1v1h-1zM2,17h1v1h-1zM4,17h1v1h-1zM5,17h1v1h-1zM6,17h1v1h-1zM7,17h1v1h-1zM8,17h1v1h-1zM9,17h1v1h-1zM10,17h1v1h-1zM12,17h1v1h-1zM13,17h1v1h-1zM15,17h1v1h-1zM16,17h1v1h-1zM18,17h1v1h-1zM20,17h1v1h-1zM24,17h1v1h-1zM26,17h1v1h-1zM27,17h1v1h-1zM1,18h1v1h-1zM2,18h1v1h-1zM4,18h1v1h-1zM8,18h1v1h-1zM10,18h1v1h-1zM11,18h1v1h-1zM13,18h1v1h-1zM17,18h1v1h-1zM18,18h1v1h-1zM19,18h1v1h-1zM20,18h1v1h-1zM21,18h1v1h-1zM22,18h1v1h-1zM23,18h1v1h-1zM24,18h1v1h-1zM25,18h1v1h-1zM27,18h1v1h-1zM29,18h1v1h-1zM1,19h1v1h-1zM6,19h1v1h-1zM7,19h1v1h-1zM8,19h1v1h-1zM10,19h1v1h-1zM11,19h1v1h-1zM16,19h1v1h-1zM17,19h1v1h-1zM18,19h1v1h-1zM23,19h1v1h-1zM24,19h1v1h-1zM27,19h1v1h-1zM1,20h1v1h-1zM5,20h1v1h-1zM6,20h1v1h-1zM12,20h1v1h-1zM15,20h1v1h-1zM17,20h1v1h-1zM19,20h1v1h-1zM21,20h1v1h-1zM22,20h1v1h-1zM23,20h1v1h-1zM24,20h1v1h-1zM25,20h1v1h-1zM28,20h1v1h-1zM1,21h1v1h-1zM4,21h1v1h-1zM7,21h1v1h-1zM10,21h1v1h-1zM16,21h1v1h-1zM18,21h1v1h-1zM19,21h1v1h-1zM21,21h1v1h-1zM22,21h1v1h-1zM23,21h1v1h-1zM24,21h1v1h-1zM25,21h1v1h-1zM27,21h1v1h-1zM28,21h1v1h-1zM29,21h1v1h-1zM9,22h1v1h-1zM12,22h1v1h-1zM13,22h1v1h-1zM14,22h1v1h-1zM15,22h1v1h-1zM17,22h1v1h-1zM18,22h1v1h-1zM19,22h1v1h-1zM21,22h1v1h-1zM25,22h1v1h-1zM26,22h1v1h-1zM27,22h1v1h-1zM28,22h1v1h-1zM29,22h1v1h-1zM1,23h1v1h-1zM2,23h1v1h-1zM3,23h1v1h-1zM4,23h1v1h-1zM5,23h1v1h-1zM6,23h1v1h-1zM7,23h1v1h-1zM10,23h1v1h-1zM14,23h1v1h-1zM15,23h1v1h-1zM16,23h1v1h-1zM18,23h1v1h-1zM20,23h1v1h-1zM21,23h1v1h-1zM23,23h1v1h-1zM25,23h1v1h-1zM26,23h1v1h-1zM27,23h1v1h-1zM1,24h1v1h-1zM7,24h1v1h-1zM9,24h1v1h-1zM11,24h1v1h-1zM12,24h1v1h-1zM13,24h1v1h-1zM14,24h1v1h-1zM16,24h1v1h-1zM17,24h1v1h-1zM20,24h1v1h-1zM21,24h1v1h-1zM25,24h1v1h-1zM29,24h1v1h-1zM1,25h1v1h-1zM3,25h1v1h-1zM4,25h1v1h-1zM5,25h1v1h-1zM7,25h1v1h-1zM9,25h1v1h-1zM10,25h1v1h-1zM15,25h1v1h-1zM18,25h1v1h-1zM21,25h1v1h-1zM22,25h1v1h-1zM23,25h1v1h-1zM24,25h1v1h-1zM25,25h1v1h-1zM27,25h1v1h-1zM1,26h1v1h-1zM3,26h1v1h-1zM4,26h1v1h-1zM5,26h1v1h-1zM7,26h1v1h-1zM9,26h1v1h-1zM10,26h1v1h-1zM11,26h1v1h-1zM13,26h1v1h-1zM17,26h1v1h-1zM19,26h1v1h-1zM20,26h1v1h-1zM24,26h1v1h-1zM26,26h1v1h-1zM27,26h1v1h-1zM28,26h1v1h-1zM29,26h1v1h-1zM1,27h1v1h-1zM3,27h1v1h-1zM4,27h1v1h-1zM5,27h1v1h-1zM7,27h1v1h-1zM9,27h1v1h-1zM12,27h1v1h-1zM13,27h1v1h-1zM14,27h1v1h-1zM16,27h1v1h-1zM17,27h1v1h-1zM18,27h1v1h-1zM19,27h1v1h-1zM20,27h1v1h-1zM22,27h1v1h-1zM23,27h1v1h-1zM24,27h1v1h-1zM25,27h1v1h-1zM26,27h1v1h-1zM27,27h1v1h-1zM28,27h1v1h-1zM1,28h1v1h-1zM7,28h1v1h-1zM10,28h1v1h-1zM11,28h1v1h-1zM14,28h1v1h-1zM15,28h1v1h-1zM16,28h1v1h-1zM21,28h1v1h-1zM22,28h1v1h-1zM23,28h1v1h-1zM24,28h1v1h-1zM26,28h1v1h-1zM28,28h1v1h-1zM1,29h1v1h-1zM2,29h1v1h-1zM3,29h1v1h-1zM4,29h1v1h-1zM5,29h1v1h-1zM6,29h1v1h-1zM7,29h1v1h-1zM9,29h1v1h-1zM12,29h1v1h-1zM13,29h1v1h-1zM14,29h1v1h-1zM15,29h1v1h-1zM16,29h1v1h-1zM18,29h1v1h-1zM20,29h1v1h-1zM23,29h1v1h-1zM24,29h1v1h-1zM25,29h1v1h-1zM26,29h1v1h-1zM27,29h1v1h-1z" fill="#18181B"/></svg>
+          </div>
+          <div class="card-headline" style="font-size: 1.5rem;">Çalgan Aygün</div>
+          <a href="https://www.linkedin.com/in/calganaygun" target="_blank" rel="noopener noreferrer" class="code-chip" style="text-decoration: none;">linkedin.com/in/calganaygun</a>
+        </div>
+
+        <!-- Right Card: Reach Out & Links -->
+        <div class="visual-card" style="background: #FEF9C3; padding: 28px; align-items: stretch; text-align: left;">
+          <span class="card-tag" style="background: var(--mint); color: var(--ink);">LET'S TALK CLOUD &amp; PIPELINES</span>
+          <div style="display: flex; flex-direction: column; gap: 12px; width: 100%; margin-top: 6px;">
+            <a href="https://www.linkedin.com/in/calganaygun" target="_blank" rel="noopener noreferrer" style="background: var(--white); border: var(--border); box-shadow: var(--shadow-sm); border-radius: 14px; padding: 12px 16px; text-decoration: none; color: var(--ink); font-weight: 800; display: flex; justify-content: space-between; align-items: center;">
+              <span>💼 LinkedIn</span><span class="code-chip" style="margin-top:0;">/in/calganaygun ↗</span>
+            </a>
+            <a href="https://calganaygun.com" target="_blank" rel="noopener noreferrer" style="background: var(--white); border: var(--border); box-shadow: var(--shadow-sm); border-radius: 14px; padding: 12px 16px; text-decoration: none; color: var(--ink); font-weight: 800; display: flex; justify-content: space-between; align-items: center;">
+              <span>🌐 Website &amp; Blog</span><span class="code-chip" style="margin-top:0;">calganaygun.com ↗</span>
+            </a>
+            <a href="https://pipelines.company" target="_blank" rel="noopener noreferrer" style="background: var(--white); border: var(--border); box-shadow: var(--shadow-sm); border-radius: 14px; padding: 12px 16px; text-decoration: none; color: var(--ink); font-weight: 800; display: flex; justify-content: space-between; align-items: center;">
+              <span>⚙️ DevSecOps</span><span class="code-chip" style="margin-top:0;">pipelines.company ↗</span>
+            </a>
+            <a href="https://github.com/calganaygun/trust-no-pipeline-gcp-demo" target="_blank" rel="noopener noreferrer" style="background: var(--white); border: var(--border); box-shadow: var(--shadow-sm); border-radius: 14px; padding: 12px 16px; text-decoration: none; color: var(--ink); font-weight: 800; display: flex; justify-content: space-between; align-items: center;">
+              <span>💻 Live Demo Repo</span><span class="code-chip" style="margin-top:0; color: var(--mint);">GitHub Repo ↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="keyword-row">
+        <div class="sticker" style="background: var(--yellow);">📡 Callsign: SQ5CA</div>
+        <div class="sticker" style="background: var(--mint);">🌐 ASN: AS218375</div>
+        <div class="sticker" style="background: #E0E7FF;">📱 Slides: calgan.dev/krk-iam</div>
       </div>
     </section>
 
@@ -1207,15 +1692,15 @@
 
   <!-- Speaker Notes Drawer -->
   <aside class="notes-drawer" id="notesDrawer">
-    <h4>🎙️ Speaker Notes (For You, Not the Slide!)</h4>
+    <h4>📝 Speaker Notes (For You, Not the Slide!)</h4>
     <p id="notesText"></p>
   </aside>
 
   <!-- Bottom Bar -->
   <footer class="bottom-bar">
-    <div id="slideNum">01 / 11</div>
+    <div id="slideNum">01 / 19</div>
     <div class="dots" id="dotsContainer"></div>
-    <div>⬅️ ➡️ or SPACE</div>
+    <div>← → or SPACE</div>
   </footer>
 
   <script>
@@ -1224,7 +1709,21 @@
     const slideNum = document.getElementById('slideNum');
     const notesDrawer = document.getElementById('notesDrawer');
     const notesText = document.getElementById('notesText');
+    const mobileHub = document.getElementById('mobileHub');
     let idx = 0;
+
+    // Auto-detect mobile screen / mobile browser and show the Mobile Links Hub
+    function isMobileDevice() {
+      return window.innerWidth <= 860 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    function dismissMobileHub() {
+      mobileHub.classList.remove('active');
+    }
+
+    if (isMobileDevice()) {
+      mobileHub.classList.add('active');
+    }
 
     slides.forEach((_, i) => {
       const d = document.createElement('div');
@@ -1263,15 +1762,15 @@
       if (wormZapped) {
         worm1.classList.add('zapped');
         worm2.classList.add('zapped');
-        head1.textContent = '😵';
-        head2.textContent = '😵';
+        head1.textContent = '🛑';
+        head2.textContent = '🛑';
         box.style.background = '#D1FAE5';
         sticker.style.background = 'var(--mint)';
-        sticker.textContent = '💀 Both Worms Starved! (0 Static Keys + Strict CEL)';
+        sticker.textContent = '✅ Both Worms Blocked! (0 Static Keys + Strict CEL)';
       } else {
         worm1.classList.remove('zapped');
         worm2.classList.remove('zapped');
-        head1.textContent = '😈';
+        head1.textContent = '🐛';
         head2.textContent = '🐛';
         box.style.background = '#FEF9C3';
         sticker.style.background = 'var(--yellow)';
@@ -1279,7 +1778,7 @@
       }
     }
 
-    // Slide 8 Interactive CEL Bouncer
+    // Slide 9 Interactive CEL Bouncer
     let strictBouncer = false;
     function toggleBouncer() {
       strictBouncer = !strictBouncer;
